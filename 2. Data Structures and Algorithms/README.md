@@ -3,7 +3,7 @@
 <img src="https://www.pepcoding.com/images/logo.png" alt="Smiley face" height="300" width="300">
 
 ![IBM](http://i.imgur.com/Qktqnu1.png) INSTRUCTORS
-#### Instructors: Shreesh Tripathi, Jasbir Singh, Mohit Behl
+#### Instructors: Shreesh Tripathi, Mohit Behl
 
 ## Course Description
 
