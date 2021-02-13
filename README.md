@@ -10,4 +10,10 @@ Specialization Course Link: [https://www.pepcoding.com]
 
 Following Topics will be covered in this Program:
 
+- [ ] __Web Development( MERN Stack )__
 
+- [ ] __Data Structures and Algorithms( Foundation, Levelup, Interview Preparation, CP )__
+
+- [ ] __Core Subjects__ 
+
+- [ ] __Apptitude( SELF )__ 
