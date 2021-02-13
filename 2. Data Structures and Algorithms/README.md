@@ -1,2 +1,2 @@
-# PepCoding-Placement-Program
-All the study material and the assignments which I made/ got and did respectively will be uploaded here.
+# Data Structures and Algorithms
+All the study material and the assignments which I made/ got and did respectively for DSA will be uploaded here.
