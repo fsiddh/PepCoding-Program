@@ -20,4 +20,4 @@ Following Topics will be covered in this Program:
 
 ## PPP Curriculum:
 
-<img src="plan.png" alt="Smiley face" height="500" width="800">
+<img src="raw/images/plan.png" alt="Smiley face" height="500" width="800">
