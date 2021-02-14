@@ -17,3 +17,7 @@ Following Topics will be covered in this Program:
 - [ ] __Core Subjects__ 
 
 - [ ] __Apptitude( SELF )__ 
+
+## PPP Curriculum:
+
+<img src="plan.png" alt="Smiley face" height="500" width="800">
