@@ -9,5 +9,8 @@
 
 All the study material and the assignments which I made/ got and did respectively for Web Development will be uploaded here.
 
-*This course is part of the 'Pepcoding Placement Program'.
+*This course is part of the "Pepcoding Placement Program".
 
+## Web Development Curriculum:
+
+<img src="raw/images/curriculum.png" alt="Smiley face" height="400" width="800">
