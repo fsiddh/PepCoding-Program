@@ -11,6 +11,4 @@ All the study material and the assignments which I made/ got and did respectivel
 
 *This course is part of the 'Pepcoding Placement Program'.
 
-## DSA Curriculum
 
-<img src="plan.png" alt="Smiley face" height="500" width="800">
