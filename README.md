@@ -6,7 +6,7 @@
 Along with all the study material this repository contains all the resources of Assignments given and asked in PepCoding-Placement-Program.
 Currently I'm also working on this course. I keep on updating the all resources as I proceed further in this certification.
 
-Specialization Course Link: [https://www.pepcoding.com]
+Placement Program Link: [https://www.pepcoding.com]
 
 Following Topics will be covered in this Program:
 
