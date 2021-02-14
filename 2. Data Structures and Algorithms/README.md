@@ -12,3 +12,4 @@ All the study material and the assignments which I made/ got and did respectivel
 *This course is part of the 'Pepcoding Placement Program'.
 
 
+<img src="test/plan.png" alt="Smiley face" height="300" width="300">
