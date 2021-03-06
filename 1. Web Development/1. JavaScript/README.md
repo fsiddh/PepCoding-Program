@@ -1,5 +1,6 @@
 # Important Details 
-
+<p>We'll learn Web Development via different Modules(eg. JS, Browser, React etc) and each Module will consist,</p> 
+<p>of different Activities(ie projects). This is considered more better approach to leanr dev.</p>
 <li>
 <ul>We will learn JS via different activities shown below:</ul>
 <img src="raw/images/activities.PNG" alt="Trulli" width="500" height="333">
