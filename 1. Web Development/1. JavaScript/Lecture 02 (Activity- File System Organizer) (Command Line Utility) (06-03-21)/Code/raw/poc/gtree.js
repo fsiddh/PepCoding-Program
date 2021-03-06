@@ -28,10 +28,10 @@ let root = {
 // faith ?? , base case ??
 function displayGtree(node) {
     // d10-> d20,d30,d40
-    let menMYChild = "" + node.name + "->";
+    let menMYChild = "" + node.name + " -> ";
     for (let i = 0; i < node.children.length; i++) {
         let child = node.children[i];
-        menMYChild += child.name + ","
+        menMYChild += child.name + " "
     }
     console.log(menMYChild);
     // faith
