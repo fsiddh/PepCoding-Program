@@ -9,9 +9,11 @@ let path = require("path");
 function isFileorNOt(dirpath) {
     return fs.lstatSync(dirpath).isFile();
 }
+
 function listContent(dirpath) {
     return fs.readdirSync(dirpath);
 }
+
 function viewTree(dirpath, indent) {
     // console.log(dirpath);
     let isFile = isFileorNOt(dirpath);
