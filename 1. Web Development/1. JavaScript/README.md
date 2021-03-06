@@ -1,8 +1,4 @@
 # Important Details 
-<p>We'll learn Web Development via different Modules(eg. JS, Browser, React etc) and each Module will consist of different Activities(ie projects).</p> 
-<p> This is considered to be a more better approach for learning dev.</p>
-
-<p></p>
 
 <li>
 <ul>We will learn JS via different activities shown below:</ul>
