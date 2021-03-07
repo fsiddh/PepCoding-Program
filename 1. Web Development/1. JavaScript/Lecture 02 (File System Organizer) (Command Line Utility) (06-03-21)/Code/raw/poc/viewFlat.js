@@ -65,4 +65,4 @@ function viewFlat(dirpath, toPrint) {
 // viewTree(input[0], "");
 // lstastync , readdir,readfile 
 
-console.log(listContent("C:\Program Files"));
+// console.log(listContent("C:\Program Files"));
