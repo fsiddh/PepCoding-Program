@@ -11,7 +11,7 @@ function isFileorNOt(dirpath) {
 }                                          // a file or not.
 
 function listContent(dirpath) {
-    return fs.readdirSync(dirpath); // Gets the contents(folders and files) of the dirpath.
+    return fs.readdirSync(dirpath); // "fs.readdirSync(dirpath)" gets the contents(folders and files) of the dirpath.
 }                                   // mtlb dirpath wali jage jitne bhi files or folders hai unki
                                     // list dedega Array ke form me
 
