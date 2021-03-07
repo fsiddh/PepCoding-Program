@@ -1,29 +1,32 @@
-wCat is a clone of cat command available in bash but not in windows cmd.
+<p>wCat is a clone of cat command available in bash but not in windows cmd.</p>
 
-It is used to display or make a copy content of one or more files in the terminal 
+<p>It is used to display or make a copy content of one or more files in the terminal </p>
 
 
-General Syntax:
+<p>General Syntax:
 wcat [options] [files]
 option to remove big line break (-s)
 option to add line number to non empty lines (-b)
 option to add line numbers to all lines (-n) 
-Commands:
-1- node wcat.js filepath => displays content of the file in the terminal 
-2- node wcat.js filepath1 filepath2 filepath3... => displays content of all files in the terminal(contactinated form) in the given order.
-3- node wcat.js -s filepath => convert big line breaks into a singular line break
-4- node wcat -n filepath => give numbering to all the lines 
-5- node wcat -b filepath => give numbering to non-empty lines
-We can mix and match the options.
+</p>
+
+<p>
+Commands:</p>
+<p>1- node wcat.js filepath => displays content of the file in the terminal </p>
+<p>2- node wcat.js filepath1 filepath2 filepath3... => displays content of all files in the terminal(contactinated form) in the given order.</p>
+<p>3- node wcat.js -s filepath => convert big line breaks into a singular line break</p>
+<p>4- node wcat -n filepath => give numbering to all the lines </p>
+<p>5- node wcat -b filepath => give numbering to non-empty lines</p>
+<p>We can mix and match the options.</p>
 
 
-Edge cases:
-1- If file entered is not found then it gives file does not exist error.
-2- -n and -b are 2 options which are mutually exclusive so if user types both of them together only the first enter option should work.
+<p>Edge cases:</p>
+<p>1- If file entered is not found then it gives file does not exist error.</p>
+<p>2- -n and -b are 2 options which are mutually exclusive so if user types both of them together only the first enter option should work.</p>
 
 
 
-**Ignore**
-6- node wcat filenamepath > filename2path => put all the content of filename into filename2 by overriding and also creates filename2 if it doesn't exist.
-7- node wcat filename >> filename2 => append all the content of filename into filename2
-8- node wcat -s filename > filename2 =>get the file content of filename remove large spaces and save the output in filename2
+<p>**Ignore**</p>
+<p>6- node wcat filenamepath > filename2path => put all the content of filename into filename2 by overriding and also creates filename2 if it doesn't exist.</p>
+<p>7- node wcat filename >> filename2 => append all the content of filename into filename2</p>
+<p>8- node wcat -s filename > filename2 =>get the file content of filename remove large spaces and save the output in filename2</p>
