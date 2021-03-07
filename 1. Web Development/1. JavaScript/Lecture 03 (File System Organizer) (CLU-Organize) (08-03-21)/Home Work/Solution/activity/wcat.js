@@ -1,10 +1,11 @@
-const viewfnObj = require("./commands/view");
 const helpfnObj = require("./commands/help");
+const viewfnObj = require("./commands/view");
 const organizefnObj = require("./commands/organize");
 
-let input = process.argv.slice(2); // ex. input = {"view", "C:\Users\\DELL\Downloads", "tree"}
+let input = process.argv.slice(2); 
 
-let cmd = input[0] // So in "input" we'll get "view"
+let cmd = input[0];
+
 switch (cmd) {
     case "view":
         viewfnObj.viewfn(input[1], input[2])
@@ -19,7 +20,7 @@ switch (cmd) {
         break;
 
     default:
-        console.log("Wrong command! \nType help to see the list of all the commands.");
+        console.log('Wrong command! \nType "node wcat.js help" to see the list of all the commands.');
 }
 
 
