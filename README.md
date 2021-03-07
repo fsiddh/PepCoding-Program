@@ -4,7 +4,7 @@
 ![IBM](http://i.imgur.com/Qktqnu1.png) INSTRUCTORS
 #### Instructors: Shreesh Tripathi, Jasbir Singh & Mohit Behl
 Along with all the study material this repository contains all the resources of Assignments given and asked in PepCoding-Placement-Program.
-Currently I'm also working on this course. I keep on updating the all resources as I proceed further in this certification.
+Currently I'm also working on this course. I keep on updating all the resources as I proceed further in this program.
 
 Placement Program Link: [https://www.pepcoding.com]
 
