@@ -1,18 +1,19 @@
 // file , folder 
-let fs = require("fs");
-let path = require("path");
+let fs = require("fs"); // recieves 'fs' module from node.js
+let path = require("path"); // recieves 'path' module from node.js
 
-// let content = fs.readFileSync("gtree.js");
-// console.log("content is "+content);
+//let content = fs.readFileSync("gtree.js");  <-This code gets the entire code/data present in gtree.js file
+//console.log("content is "+content);
 // viewFlat 
 // nodejs 
 function isFileorNOt(dirpath) {
-    return fs.lstatSync(dirpath).isFile();
-}
+    return fs.lstatSync(dirpath).isFile(); // "lstatSync(dirpath).isFile()" tells whether dirpath is of
+}                                          // a file or not.
 
 function listContent(dirpath) {
-    return fs.readdirSync(dirpath);
-}
+    return fs.readdirSync(dirpath); // Gets the contents(folders and files) of the dirpath.
+}                                   // mtlb dirpath wali jage jitne bhi files or folders hai unki
+                                    // list dedega Array ke form me
 
 function viewTree(dirpath, indent) {
     // console.log(dirpath);
@@ -63,3 +64,5 @@ function viewFlat(dirpath, toPrint) {
 // viewFlat(input[0], toprint);
 // viewTree(input[0], "");
 // lstastync , readdir,readfile 
+
+console.log(listContent("C:\Program Files"));
