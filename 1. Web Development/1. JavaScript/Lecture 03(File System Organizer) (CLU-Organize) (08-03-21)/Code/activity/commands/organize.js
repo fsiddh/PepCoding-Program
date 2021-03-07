@@ -50,7 +50,7 @@ function getDirectoryName(dirpath){
 // destFolder = "C:\Users\\DELL\Downloads\organised_files\docs"
 function copyFiletoFolder(dirpath, destFolder){ 
     let orgFileName = path.basename(dirpath); // get name of file from dirpath -> file.txt
-    let destFilePath = path.join(destFolder, orgFileName); // destFilePath = "C:\Users\\DELL\Downloads\organised_files\docs\file.txt"
+    let destFilePath = path.join(destFolder, orgFileName);  // destFilePath = "C:\Users\\DELL\Downloads\organised_files\docs\file.txt"
     fs.copyFileSync(dirpath,destFilePath); // fs.copyFileSync(p1, p2), this fn copies content of p1 file to p2
                                            // so it's neccessary for p2 also be a file at dest. locn.  
 }
