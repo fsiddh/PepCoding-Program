@@ -3,6 +3,7 @@ const path = require("path");
 
 const fileFnObj = require("./commands/file");
 const helpFnObj = require("./commands/help");
+const lineCountFnObj = require("./commands/n");
 
 let input = process.argv.slice(2);
 // console.log(input);
@@ -14,7 +15,7 @@ switch(cmd){
         console.log("-s");
         break;
     case "-n":
-        console.log("-n");
+        lineCountFnObj.lineCountFn(input[1]);
         break;
     case "-b":
         console.log("-b");
