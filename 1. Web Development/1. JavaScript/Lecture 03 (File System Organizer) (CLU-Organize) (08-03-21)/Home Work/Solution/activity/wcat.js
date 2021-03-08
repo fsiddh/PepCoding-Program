@@ -1,27 +1,39 @@
-const helpfnObj = require("./commands/help");
-const viewfnObj = require("./commands/view");
-const organizefnObj = require("./commands/organize");
+const helpfnObj = require("./commands/Utilities/help");
+const viewfnObj = require("./commands/Utilities/view");
+const organizefnObj = require("./commands/Utilities/organize");
 
-let input = process.argv.slice(2); 
+let fs = require("fs");
+let path = require("path");
+
+let singleFileFnObj = require("./commands/singleFile");
+const singleFile = require("./commands/singleFile");
+
+let input = process.argv.slice(2);
+// console.log(input);
 
 let cmd = input[0];
+// console.log(cmd);
 
-switch (cmd) {
-    case "view":
-        viewfnObj.viewfn(input[1], input[2])
+switch(cmd){
+    case "-s":
+
         break;
+    case "-n":
 
-    case "organize":
-        organizefnObj.organizeFn(input[1]);
         break;
+    case "-b":
 
-    case "help":
-        helpfnObj.helpfn();
         break;
-
     default:
-        console.log('Wrong command! \nType "node wcat.js help" to see the list of all the commands.');
+        if (cmd.length == 1){
+            singleFileFnObj.singleFileFn(cmd);
+        }
+        else{
+            continue;
+        }
 }
+
+
 
 
 
