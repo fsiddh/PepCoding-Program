@@ -1,8 +1,8 @@
-let fs = require("fs");
-let path = require("path");
+const fs = require("fs");
+const path = require("path");
 
-let fileFnObj = require("./commands/file");
-let helpFnObj = require("./commands/help");
+const fileFnObj = require("./commands/file");
+const helpFnObj = require("./commands/help");
 
 let input = process.argv.slice(2);
 // console.log(input);
