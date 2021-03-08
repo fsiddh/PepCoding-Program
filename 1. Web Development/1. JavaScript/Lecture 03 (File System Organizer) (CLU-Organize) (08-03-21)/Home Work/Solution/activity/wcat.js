@@ -27,7 +27,7 @@ switch(cmd){
         break;
     default:
         if (input.length == 1){
-            fileFnObj.fileFn(cmd);
+            fileFnObj.fileFn(input[0]);
         }
         else{
             for(let i=0; i<input.length; i++){
