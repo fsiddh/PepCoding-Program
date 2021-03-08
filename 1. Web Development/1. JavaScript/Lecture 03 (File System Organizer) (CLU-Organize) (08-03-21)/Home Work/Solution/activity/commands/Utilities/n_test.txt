@@ -1,36 +1,29 @@
-Render file bgm\main.wma
-File has media type 0xe436eb83... Subtype 0x6b6d0801...
-Source filter clsid is 0x187463a0...
-Source filter has loaded the source file
-RenderFile: Source filter added: Address=aae7ec
-RenderFile: Render source filter pin 5a9837c
-Render: Pin 5a9837c has major type 0x73647561...
-Render: Trying filter at address aae7ec
-Render: Examining filter at address aae7ec for input pin to connect output pin 5a9837c to
-Render: No more pins - FAILED to find a pin to use on filter aae7ec
-Render: Trying new filter with display name @device:dmo:{2EEB4ADF-4578-4D10-BCA7-BB955F56320A}{57F2DB8B-E6BB-4513-9D43-DCD2A6593125}...
-Render: Added new filter. display name @device:dmo:{2EEB4ADF-4578-4D10-BCA7-BB955F56320A}{57F2DB8B-E6BB-4513-9D43-DCD2A6593125}... has address 5a99824, WMAudio Decoder DMO
-Render: Examining filter at address 5a99824 for input pin to connect output pin 5a9837c to
-Render: Considering connecting output pin 5a9837c to pin 5a938dc on filter at address 5a99824
-Render: Connected output pin 5a9837c to pin 5a938dc on filter at 5a99824
-Render: Searching for any outputs to render from filter at address 5a99824
-Render: Attempting to render output pin 5a9c44c on filter at address 5a99824
-Render: Pin 5a9c44c has major type 0x73647561...
-Render: Trying filter at address 5a99824
-Render: Examining filter at address 5a99824 for input pin to connect output pin 5a9c44c to
-Render: Considering connecting output pin 5a9c44c to pin 5a938dc on filter at address 5a99824
-Render: pin 5a938dc is already connected
-Render: No more pins - FAILED to find a pin to use on filter 5a99824
-Render: Trying filter at address aae7ec
-Render: Examining filter at address aae7ec for input pin to connect output pin 5a9c44c to
-Render: No more pins - FAILED to find a pin to use on filter aae7ec
-Render: Trying new filter with display name @device:cm:{E0F158E1-CB04-11D0-BD4E-00A0C911CE86}\Default DirectSound Device...
-Render: Added new filter. display name @device:cm:{E0F158E1-CB04-11D0-BD4E-00A0C911CE86}\Default DirectSound Device... has address 5a9c874, Default DirectSound Device
-Render: Examining filter at address 5a9c874 for input pin to connect output pin 5a9c44c to
-Render: Considering connecting output pin 5a9c44c to pin 5a9ca5c on filter at address 5a9c874
-Render: Connected output pin 5a9c44c to pin 5a9ca5c on filter at 5a9c874
-Render: Searching for any outputs to render from filter at address 5a9c874
-Render: No outputs found.  Filter at address 5a9c874 is a renderer
-Render: Succeeded in rendering output pin 5a9c44c on filter at address 5a99824
-RenderFile: Succeeded in rendering pin 5a9837c on source filter at address aae7ec
-RenderFile ended - return code 0
+wCat is a clone of cat command available in bash but not in windows cmd.
+
+It is used to display or make a copy content of one or more files in the terminal 
+
+
+General Syntax:
+wcat [options] [files]
+option to remove big line break (-s)
+option to add line number to non empty lines (-b)
+option to add line numbers to all lines (-n) 
+Commands:
+1- node wcat.js filepath => displays content of the file in the terminal 
+2- node wcat.js filepath1 filepath2 filepath3... => displays content of all files in the terminal(contactinated form) in the given order.
+3- node wcat.js -s filepath => convert big line breaks into a singular line break
+4- node wcat.js -n filepath => give numbering to all the lines 
+5- node wcat.js -b filepath => give numbering to non-empty lines
+We can mix and match the options.
+
+
+Edge cases:
+1- If file entered is not found then it gives file does not exist error.
+2- -n and -b are 2 options which are mutually exclusive so if user types both of them together only the first enter option should work.
+
+
+
+**Ignore**
+6- node wcat filenamepath > filename2path => put all the content of filename into filename2 by overriding and also creates filename2 if it doesn't exist.
+7- node wcat filename >> filename2 => append all the content of filename into filename2
+8- node wcat -s filename > filename2 =>get the file content of filename remove large spaces and save the output in filename2
