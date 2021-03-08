@@ -1,22 +1,15 @@
-const helpfnObj = require("./commands/Utilities/help");
-const viewfnObj = require("./commands/Utilities/view");
-const organizefnObj = require("./commands/Utilities/organize");
-
 let fs = require("fs");
 let path = require("path");
 
-let singleFileFnObj = require("./commands/singleFile");
-const singleFile = require("./commands/singleFile");
+let fileFnObj = require("./commands/file");
 
 let input = process.argv.slice(2);
 // console.log(input);
 
 let cmd = input[0];
-// console.log(cmd);
 
 switch(cmd){
     case "-s":
-
         break;
     case "-n":
 
@@ -25,11 +18,13 @@ switch(cmd){
 
         break;
     default:
-        if (cmd.length == 1){
-            singleFileFnObj.singleFileFn(cmd);
+        if (input.length == 1){
+            fileFnObj.fileFn(cmd);
         }
         else{
-            continue;
+            for(let i=0; i<input.length; i++){
+                fileFnObj.fileFn(input[i]);
+            }
         }
 }
 
