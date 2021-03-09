@@ -8,6 +8,7 @@ function view(input){
     for(let i = 0;i<input.length;i++){
         if (!fs.existsSync(input[i])){
             console.log("File does not exist!!");
+            break;
         }
         else{
             let isFile = isFileorNOt(input[i]);

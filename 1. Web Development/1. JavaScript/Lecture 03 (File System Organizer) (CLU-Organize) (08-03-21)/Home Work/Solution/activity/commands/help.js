@@ -7,5 +7,5 @@ function helper() {
     5. "node wcat.js -b <filepath>" *give numbering to non-empty lines`);
 }
 module.exports = {
-    helpFn: helper
+    helpfn: helper
 }
