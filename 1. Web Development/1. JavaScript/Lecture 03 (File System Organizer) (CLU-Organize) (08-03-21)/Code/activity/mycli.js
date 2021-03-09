@@ -2,12 +2,12 @@ const viewfnObj = require("./commands/view");
 const helpfnObj = require("./commands/help");
 const organizefnObj = require("./commands/organize");
 
-let input = process.argv.slice(2); // ex. input = {"view", "C:\Users\\DELL\Downloads", "tree"}
+let input = process.argv.slice(2); 
 
-let cmd = input[0] // So in "input" we'll get "view"
+let cmd = input[0];
 switch (cmd) {
     case "view":
-        viewfnObj.viewfn(input[1], input[2])
+        viewfnObj.viewfn(input[1], input[2]);
         break;
 
     case "organize":
