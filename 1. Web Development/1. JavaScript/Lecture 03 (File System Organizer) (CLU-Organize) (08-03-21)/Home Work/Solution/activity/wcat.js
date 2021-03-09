@@ -1,41 +1,42 @@
 const fs = require("fs");
 const path = require("path");
 
-const fileFnObj = require("./commands/file");
-const helpFnObj = require("./commands/help");
-const lineCountFnObj = require("./commands/n");
-const noLineNoCountFnObj = require("./commands/b");
-const updateLineBreaksObj = require("./commands/s");
+const helpfnObj = require("./commands/help");
+const optionfnObj = require("./commands/option");
+const viewfnObj = require("./commands/view");
 
 let input = process.argv.slice(2);
 // console.log(input);
 
 let cmd = input[0];
 
-switch(cmd){
+switch (cmd) {
     case "-s":
-        updateLineBreaksObj.updateLineBreaksFn(input[1]);
+        if (!fs.existsSync(input[1])){
+            console.log("File does not exist!!");
+            break;
+        }
+        optionfnObj.optionFn(cmd,input[1]);
         break;
     case "-n":
-        lineCountFnObj.lineCountFn(input[1]);
+        if (!fs.existsSync(input[1])){
+            console.log("File does not exist!!");
+            break;
+        }
+        optionfnObj.optionFn(cmd,input[1]);
         break;
     case "-b":
-        noLineNoCountFnObj.noLinenoCountFn(input[1]);
+        if (!fs.existsSync(input[1])){
+            console.log("File does not exist!!");
+        }
+        optionfnObj.optionFn(cmd,input[1]);
         break;
     case "help":
-        helpFnObj.helpFn();
+        helpfnObj.helpfn();
         break;
     default:
-        if (input.length == 1){
-            fileFnObj.fileFn(input[0]);
-        }
-        else{
-            for(let i=0; i<input.length; i++){
-                fileFnObj.fileFn(input[i]);
-            }
-        }
+        viewfnObj.viewfn(input);
 }
-
 
 
 
