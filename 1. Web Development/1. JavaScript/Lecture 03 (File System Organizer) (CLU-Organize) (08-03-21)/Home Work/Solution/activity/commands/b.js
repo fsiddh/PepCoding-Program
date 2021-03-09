@@ -12,7 +12,7 @@ function noLinenoCount(filePath){
         
         if (line == ""){
             count++;
-            console.log(count, " ", line);
+            console.log(count, ". ", line);
         }
         else{
             console.log(line);
