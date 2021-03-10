@@ -11,17 +11,17 @@ function options(input,filepath) {
             return;
         }
         else if(input[i] == "-s"){
-            console.log("------------------------(in -s)------------------------");
+            // console.log("------------------------(in -s)------------------------");
             data = singBreak(data);
         }
         else if(input[i] == "-n" && optionChose == false){
-            console.log("------------------------(in -n)------------------------");
+            // console.log("------------------------(in -n)------------------------");
 
             optionChose = true;
             data = numberingAll(data);
         }
         else if(input[i] == "-b" && optionChose == false){
-            console.log("------------------------(in -b)------------------------");
+            // console.log("------------------------(in -b)------------------------");
 
             optionChose = true;
             data = numberingNonEmpty(data);
