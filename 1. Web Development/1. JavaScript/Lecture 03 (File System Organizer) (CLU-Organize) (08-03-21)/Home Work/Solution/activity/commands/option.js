@@ -1,12 +1,16 @@
-let fs = require("fs");
+const fs = require("fs");
 const helpfnObj = require("./help");
+
 let optionChose = false;
 
 function options(input,filepath) {
 //input[0] -s ,input[1] -b ,....input[-1]-filepath
     let data = fs.readFileSync(filepath, 'utf8');
     for(let i=0; i<input.length-1; i++){
-        if(input[i] == "-s"){
+        if (optionChose == true && (input[i] == "-b" || input[i] == "-n")){
+            return;
+        }
+        else if(input[i] == "-s"){
             console.log("------------------------(in -s)------------------------");
             data = singBreak(data);
         }
@@ -23,9 +27,12 @@ function options(input,filepath) {
             data = numberingNonEmpty(data);
         }
         else{
-            if(optionChose == false && input[i] != "-s"){
+            if(input[i] != "-s"){
                 console.log("Wrong Input ! Please choose any of these options only :\n");
                 helpfnObj.helpfn(input);
+                // console.log(optionChose);
+
+                return;
             }
         }
     }
