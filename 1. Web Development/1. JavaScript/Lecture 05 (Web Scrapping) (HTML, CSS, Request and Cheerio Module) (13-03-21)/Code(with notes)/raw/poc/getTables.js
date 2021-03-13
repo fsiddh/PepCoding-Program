@@ -22,22 +22,23 @@ function extractHtml(html){
 
     //getting bowler table
     let bowling_table = selectorTool(".table.bowler");//selecting from required inspect
-    let stringhtml = "";
-
+    
+    // Gets Tables data for both the Innings
+    // let stringhtml = "";
     // for(let i = 0;i<bowling_table.length;i++){
     //     stringhtml+=selectorTool(bowling_table[i]).html();
     // }
     // console.log(stringhtml);
 
     for(let i = 0;i<bowling_table.length;i++){
-        let singleInning = selectorTool(bowling_table[i]).find("tbody tr"); // get table rows
+        let singleInning = selectorTool(bowling_table[i]).find("tbody tr"); // gets 1st Innings bowling table's rows
         for(let j=0;j<singleInning.length;j++){
             let singleAllcol = selectorTool(singleInning[j]).find("td"); // get columns of each row
             let name = selectorTool(singleAllcol[0]).text(); //name was in 1st column
             let wicket = selectorTool(singleAllcol[4]).text(); //wicket was in 4th column
             console.log("Name -> ",name,"wicket -> ",wicket);
         }
-        console.log("``````````````````````````````````");
+        console.log("``````````````````````````````````"); // This line indicates Inning 1 is Over!
     }
 }
 

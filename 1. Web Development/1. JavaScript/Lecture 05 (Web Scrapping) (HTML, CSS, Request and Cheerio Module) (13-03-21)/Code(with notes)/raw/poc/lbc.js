@@ -17,11 +17,11 @@ function cb(error,response,html){
 
 function extractHtml(html){
     console.log("2");
-    let selectorTool = cheerio.load(html);//loading html
+    let selectorTool = cheerio.load(html);//loading html via cheerio in selectorTool
     let allCommentries = selectorTool(".d-flex.match-comment-padder,align-items-center .match-comment-long-text");//selecting from required inspect 
     console.log(allCommentries.length);
-    //rule -> jab bhi indexing krni ho you have to first wrap and then access text 
-    let lastComment = selectorTool(allCommentries[2]).text(); 
+    //rule -> jab bhi indexing krni ho you have to first wrap in selectorTool and then access text() or html() 
+    let lastComment = selectorTool(allCommentries[0]).text(); 
     console.log(lastComment);//found the last comment
 }
 
