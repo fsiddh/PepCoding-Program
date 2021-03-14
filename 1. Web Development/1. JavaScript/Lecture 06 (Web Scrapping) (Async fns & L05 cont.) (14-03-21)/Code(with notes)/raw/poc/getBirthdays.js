@@ -38,23 +38,27 @@ function cb(error,response,html){
 
 function extractHtml(html){
     let selectorTool = cheerio.load(html);
-    let teamNameElemArr = selectorTool(".Collapsible h5");
-    let teamNameArr = [];
-    for(let i=0;i<teamNameElemArr;i++){
+    let teamNameElemArr = selectorTool(".Collapsible h5"); // Dono team name ke container ko select kr liya
+    let teamNameArr = []; // to store both team names
+
+    // Gets both teams name
+    for(let i=0; i<teamNameElemArr.length; i++){
         let teamName = selectorTool(teamNameElemArr[i]).text();
-        teamName = teamName.split("INNINGS")[0];
-        teamName = teamName.trim();
-        teamNameArr.push(teamName);
+
+        teamName = teamName.split("INNINGS")[0]; // teamName = ["team_name ", " (20 overs maximum)"]
+        teamName = teamName.trim(); // After getting an array of strings we'll get extra space, to remove that space, use trim()
+        teamNameArr.push(teamName); // teamName = ["player", "(20 overs maximum)"]
     }
 
+    //GETTING BATSMAN TABLE
     let batsmantableArr = selectorTool(".table.batsman");
     for(let i=0;i<batsmantableArr.length;i++){
-        
+        //GETTING LINK
         let batsmanNameAnchor = selectorTool(batsmantableArr[i]).find("tbody tr .batsman-cell a"); //anchor tag me next page ki link h vha pauch gye
         // batsmanNameAnchor -> <a href="https://www.espncricinfo.com/ci/content/player/325012.html" data-hover="" class="small" target="_parent" rel="" title="View full profile of Marcus Stoinis">Marcus Stoinis&nbsp;</a>;
         for(let j=0;j<batsmanNameAnchor.length;j++){
-            let name = selectorTool(batsmantableArr[j]).text();
-            let teamName = teamNameArr[i];
+            let name = selectorTool(batsmantableArr[j]).text();         //batsman name
+            let teamName = teamNameArr[i];                              //batsman teamname
             let link = selectorTool(batsmanNameAnchor[j]).attr("href"); //anchor tag -> href se link nikal li using attr() -> "https://www.espncricinfo.com/ci/content/player/325012.html"
             printBirthdays(link,name,teamName); 
             //link -> "https://www.espncricinfo.com/ci/content/player/325012.html"
@@ -65,7 +69,6 @@ function extractHtml(html){
         //console.log("````````````````````````````````````````````````");
     }
 }
-
 
 // let t = ah.getAttribute('a href');
 // console.log(t);

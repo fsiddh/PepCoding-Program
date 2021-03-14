@@ -1,8 +1,10 @@
-const url = "https://www.espncricinfo.com/series/ipl-2020-21-1210595/delhi-capitals-vs-mumbai-indians-final-1237181/ball-by-ball-commentary";
-const request = require("request");
-const cheerio = require("cheerio");
+//https://www.espncricinfo.com/series/ipl-2020-21-1210595/delhi-capitals-vs-mumbai-indians-final-1237181/ball-by-ball-commentary
 
-console.log("1");
+let url = "https://www.espncricinfo.com/series/ipl-2020-21-1210595/delhi-capitals-vs-mumbai-indians-final-1237181/ball-by-ball-commentary";
+let request = require("request");
+let cheerio = require("cheerio");//used to slect specific data from html
+
+console.log("before");
 request(url,cb);
 
 function cb(error,response,html){
@@ -15,12 +17,12 @@ function cb(error,response,html){
 
 function extractHtml(html){
     console.log("2");
-    let selectorTool = cheerio.load(html);
-    let allCommentries = selectorTool(".d-flex.match-comment-padder,align-items-center .match-comment-long-text");
+    let selectorTool = cheerio.load(html);//loading html via cheerio in selectorTool
+    let allCommentries = selectorTool(".d-flex.match-comment-padder,align-items-center .match-comment-long-text");//selecting from required inspect 
     console.log(allCommentries.length);
-    
-    let lastComment = selectorTool(allCommentries[0]).text(); 
-    console.log(lastComment);
+    //rule -> jab bhi indexing krni ho you have to first wrap in selectorTool and then access text() or html() 
+    let lastComment = selectorTool(allCommentries[0]).text(); //latest commentry is pushed on the top of array (a[0])
+    console.log(lastComment);//found the last comment
 }
 
-console.log("3");
+console.log("after");
