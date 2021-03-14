@@ -2,8 +2,8 @@ const URL = "https://www.espncricinfo.com/series/ipl-2020-21-1210595/delhi-capit
 const REQUEST = require("request");
 const CHEERIO = require("cheerio");
 
-console.log("1");
-REQUEST(URL,cb);
+console.log("before");
+REQUEST(URL,cb); // request if an async function and it'll also pass html to cb()
 
 function cb(error,response,html){
     if(error){
@@ -14,30 +14,30 @@ function cb(error,response,html){
 }
 
 function extractHtml(html){
-    console.log("2");
 
     let selectorTool = CHEERIO.load(html);
-    let bowling_table = selectorTool(".table.bowler");
+    let teamNameElemArr = selectorTool(".Collapsible h5"); // gets both teams batsmen table
+    let teamNameArr = [];
 
-    
-    let max_wicket = -1;
-    let highest_wicketer;
-    for(let i = 0;i<bowling_table.length;i++){
-        let singleInning = selectorTool(bowling_table[i]).find("tbody tr");
-        for(let j=0;j<singleInning.length;j++){
-            let singleAllcol = selectorTool(singleInning[j]).find("td");
-            let name = selectorTool(singleAllcol[0]).text();
-            let wicket = selectorTool(singleAllcol[4]).text();
-            console.log("Name -> ",name,"wicket -> ",wicket);
-            if (wicket > max_wicket){
-                max_wicket = wicket;
-                highest_wicketer = name;
-            }
-        }
-        console.log("``````````````````````````````````");
+    // Gets both teams name
+    for(let i=0; i<teamNameElemArr.length; i++){
+        let teamName = selectorTool(teamNameElemArr[i]).text();
+
+        teamName = teamName.split("INNINGS")[0]; // teamName = ["team_name ", " (20 overs maximum)"]
+        teamName = teamName.trim(); // After getting an array of strings we'll get extra space, to remove that space, use trim()
+        teamNameArr.push(teamName); // teamName = ["player", "(20 overs maximum)"]
     }
+    
+    let batsmanTableArr = selectorTool(".table.batsman"); // selects batsmen tables
+    for(let i=0; i<batsmanTableArr.length; i++){ 
+        let batsmanName = selectorTool(batsmanTableArr[i]).find("tbody tr .batsman-cell"); // gets all the rows(ie stats of every batsmen)
 
-    console.log("Highest wickets were taken by->", highest_wicketer,"(",max_wicket,")");
-        
-    console.log("2");
+        for(let j=0; j<batsmanName.length; j++){ // then one by one select text of each row(ie playername) and print
+            let name = selectorTool(batsmanName[j]).text();
+            console.log(name+"-> "+teamNameArr[i]);
+        }
+        console.log("``````````````````````````````````````");
+    }
+    
 }
+console.log("after");
