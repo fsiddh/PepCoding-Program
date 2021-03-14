@@ -27,7 +27,6 @@ function extractBday(name,teamName,html){
     console.log(name+" plays for "+teamName+" has birthday on "+bday);
 }
 
-
 request(url,cb); //request url from server
 function cb(error,response,html){
     if(error){
