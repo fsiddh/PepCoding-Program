@@ -1,4 +1,3 @@
-const fs = require("fs");
 let url = "https://www.espncricinfo.com/series/ipl-2020-21-1210595/match-results";
 let request = require("request");
 let cheerio = require("cheerio");
