@@ -3,6 +3,7 @@ let url = "https://www.espncricinfo.com/series/ipl-2020-21-1210595/match-results
 let request = require("request");
 let cheerio = require("cheerio");
 console.log("Before");
+
 request(url, cb);
 function cb(error, response, html) {
     if (error) {
@@ -12,6 +13,7 @@ function cb(error, response, html) {
         extractHtml(html);
     }
 }
+
 function extractHtml(html) {
     let selTool = cheerio.load(html);
     let matchCard = selTool(".col-md-8.col-16");
@@ -27,6 +29,7 @@ function extractHtml(html) {
     }
     serialPlayer(allLinks, 0)
 }
+
 function serialPlayer(allLinks, n) {
     if (n == allLinks.length) {
         return
@@ -40,9 +43,10 @@ function serialPlayer(allLinks, n) {
         }
     })
 }
+
 function extractPlayer(html) {
     let selTool = cheerio.load(html);
-   let playerDetails= selTool(".best-player-content").text();
-   console.log(playerDetails)
-   
+    let playerDetails= selTool(".best-player-content").text();
+    console.log(playerDetails)
+
 }
