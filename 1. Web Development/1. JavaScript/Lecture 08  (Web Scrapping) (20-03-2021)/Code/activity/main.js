@@ -1,6 +1,6 @@
-let url = "https://github.com/topics";
-let request = require("request");
-let cheerio = require("cheerio");
+const url = "https://github.com/topics";
+const request = require("request");
+const cheerio = require("cheerio");
 
 console.log("Before");
 
@@ -25,28 +25,39 @@ function extractHtml(html){
         let currentTopicName = selTool(currentTopicData).text().trim();
 
         let currentTopicLink = selTool(allTopics[i]).find(".no-underline.d-flex.flex-column.flex-justify-center").attr("href");
-        let fullLink = "https://github.com" + currentTopicLink
+        let fullLink = "https://github.com" + currentTopicLink;
 
         // console.log(currentTopicName);
         // console.log(fullLink);
         // console.log();
 
-        getRepoHelper(currentTopicName, fullLink);
+        navigateToRepoHelper(currentTopicName, fullLink);
     }
 }
 
-function getRepoHelper(topic, link){
-    request(link, function(error, response, html){
+function navigateToRepoHelper(topic, fullLink){
+    request(fullLink, function(error, response, html){
         if(error){
             console.log(error);
         }
         else{
-            getRepo(topic, link);
+            navigateToRepo(topic, html);
         }
     })
 }
 
-function getRepo(topic, link){}
+function navigateToRepo(topic, html){
+    let selTool = cheerio.load(html);
+    let allRepo = selTool(".d-flex.flex-justify-between.my-3");
+
+    // console.log(allRepo.length);
+
+    for(let i=0; i<9; i++){
+        let repoLink = selTool(allRepo[i]).find(".text-bold").attr("href");
+        console.log("https://github.com" + repoLink);
+    }
+    console.log();
+}
 
 
 
