@@ -15,3 +15,4 @@ All the study material and the assignments which I made/ got and did respectivel
 ## Web Development Curriculum:
 
 <img src="raw/images/flow.png" alt="Smiley face" height="1000" width="1200">
+
