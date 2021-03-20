@@ -23,20 +23,25 @@ function extractHtml(html){
         let fullLink = "https://www.espncricinfo.com" + linkMatch;
         // console.log(fullLink);
 
-        printPOTM(fullLink);
+        printPOTM(fullLink, cardsButtons.length, 0);
     }
 }
 
-function printPOTM(fullLink){
-    request(fullLink,cb);
-    function cb(error,response,fullLink){
+function printPOTM(fullLink, len, n){
+    if (len == n){
+        return;
+    }
+
+    request(fullLink, function (error,response,fullLink){
         if(error){
             console.log(error);
         }else{
             extractPOTM(fullLink);
+            printPOTM(fullLink, len, n+1);
         }
     }
 }
+
 
 function extractPOTM(fullLink){
     let selectorTool = cheerio.load(fullLink);
