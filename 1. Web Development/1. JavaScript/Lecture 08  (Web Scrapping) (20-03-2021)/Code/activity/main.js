@@ -27,8 +27,27 @@ function extractHtml(html){
         let currentTopicLink = selTool(allTopics[i]).find(".no-underline.d-flex.flex-column.flex-justify-center").attr("href");
         let fullLink = "https://github.com" + currentTopicLink
 
-        console.log(currentTopicName);
-        console.log(fullLink);
-        console.log();
+        // console.log(currentTopicName);
+        // console.log(fullLink);
+        // console.log();
+
+        getRepoHelper(currentTopicName, fullLink);
     }
 }
+
+function getRepoHelper(topic, link){
+    request(link, function(error, response, html){
+        if(error){
+            console.log(error);
+        }
+        else{
+            getRepo(topic, link);
+        }
+    })
+}
+
+function getRepo(topic, link){}
+
+
+
+console.log("After");
