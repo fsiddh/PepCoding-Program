@@ -5,7 +5,7 @@ function fn() {
     a++;
     console.log("5",a); 
     if (true) {
-        // var a = 30;
+        var a = 30;
         console.log("8",a);
     }
     console.log("10",a); 
