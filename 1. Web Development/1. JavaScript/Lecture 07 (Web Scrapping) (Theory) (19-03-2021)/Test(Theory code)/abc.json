@@ -1,0 +1,29 @@
+[
+    {
+        "name": "jasbir",
+        "lastName": "singh",
+        "age": 24,
+        "address": {
+            "state": "Delhi",
+            "city": "delhi"
+        }
+    },
+    {
+        "name": "rohan",
+        "lastName": "singh",
+        "age": 24,
+        "address": {
+            "state": "Delhi",
+            "city": "delhi"
+        }
+    },
+    {
+        "name": "ram",
+        "lastName": "singh",
+        "age": 25,
+        "address": {
+            "state": "Delhi",
+            "city": "delhi"
+        }
+    }
+]
