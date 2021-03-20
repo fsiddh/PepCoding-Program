@@ -1,21 +1,21 @@
 ## Test-1 (Syllabus)
 
-# output statements 
-# comments 
-# let and dynamic behavior 
-# operators 
-# data types 
-# loops 
-# Functions and Function expressions AND IIFE ,arguments 
-# real and fake function
-# Arrays 
-# Objects 
+<p> output statements  </p>
+<p> comments  </p>
+<p> let and dynamic behavior  </p>
+<p> operators  </p>
+<p> data types  </p>
+<p> loops  </p>
+<p> Functions and Function expressions AND IIFE ,arguments  </p>
+<p> real and fake function </p>
+<p> Arrays  </p>
+<p> Objects  </p>
 
-# Strings & template Strings 
+<p> Strings & template Strings  </p>
 <!-- ,nan,infinity,truthy &falsy value -->
-# scope => block, Function, global, lexical
-# type coercion
-# execution context
-# hoisting
-# variables => var, let, const
-# json => parse and stringify
+<p> scope => block, Function, global, lexical </p>
+<p> type coercion </p>
+<p> execution context </p>
+<p> hoisting </p>
+<p>variables => var, let, const </p>
+<p> json => parse and stringify </p>
