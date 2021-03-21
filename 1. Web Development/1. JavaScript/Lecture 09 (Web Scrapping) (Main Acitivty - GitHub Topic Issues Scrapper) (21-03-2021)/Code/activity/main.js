@@ -160,15 +160,15 @@ function navigateToIssue(html, topicName, repoName){
     }
 
     // ========================= JSON CREATION ==========================
-    // let file_path = path.join(__dirname, topicName, repoName + ".json");
-    // fs.writeFileSync(file_path, JSON.stringify(issueArr));
+    let file_path = path.join(__dirname, topicName, repoName + ".json");
+    fs.writeFileSync(file_path, JSON.stringify(issueArr));
     
     // ========================= PDF CREATION ==========================
-    let file_path = path.join(__dirname, topicName, repoName + ".pdf");
-    let pdf_doc = new pdfKit;
-    pdf_doc.pipe(fs.createWriteStream(file_path));
-    pdf_doc.text(JSON.stringify(issueArr));
-    pdf_doc.end();
+    // let file_path = path.join(__dirname, topicName, repoName + ".pdf");
+    // let pdf_doc = new pdfKit;
+    // pdf_doc.pipe(fs.createWriteStream(file_path));
+    // pdf_doc.text(JSON.stringify(issueArr));
+    // pdf_doc.end();
 
     // console.log("---------------------------------------------");
     // console.table(issueArr);
