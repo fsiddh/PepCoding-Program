@@ -30,6 +30,7 @@ function extractHtml(html) {
     serialPlayer(allLinks, 0)
 }
 
+// Refer "serial.js" file to build it's concept.
 function serialPlayer(allLinks, n) {
     if (n == allLinks.length) {
         return

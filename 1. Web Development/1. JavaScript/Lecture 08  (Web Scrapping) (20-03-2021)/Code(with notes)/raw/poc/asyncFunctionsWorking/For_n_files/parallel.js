@@ -1,7 +1,9 @@
 let fs = require("fs");
 let arr = ["../f1.txt", "../f2.txt", "../f3.txt", "../f4.txt"];
-// parallely read 
+
+// parallely read (Asynchronous) (Random Output)
 console.log("before");
+
 for (let i = 0; i < arr.length; i++) {
     fs.readFile(arr[i], function (err, data) {
         if (err) {
@@ -11,4 +13,5 @@ for (let i = 0; i < arr.length; i++) {
         }
     })
 }
+
 console.log("after");

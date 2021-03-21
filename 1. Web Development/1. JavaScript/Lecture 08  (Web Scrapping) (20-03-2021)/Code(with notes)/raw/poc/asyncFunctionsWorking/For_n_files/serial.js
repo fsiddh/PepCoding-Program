@@ -1,5 +1,8 @@
 let fs = require("fs");
 let arr = ["../f1.txt", "../f2.txt", "../f3.txt", "../f4.txt"];
+
+// serially read (Synchronous) (Fixed Output)
+
 console.log("before");
 // for (let i = 0; i < arr.length;) {
 //     console.log(i);
@@ -26,5 +29,6 @@ function reader(arr, n) {
         }
     })
 }
+
 reader(arr, 0);
 console.log("after");
