@@ -32,12 +32,12 @@ function createJSON(teamName, batsmenName){
 }
 
 function fillJsonWithStats(batsmanTeam, opponentTeam, batsmanName, currentTeam_batsmenRow, selTool){
-    let objArr = [];
     
     let batsmanRow = selTool(currentTeam_batsmenRow).find("td");
     // console.log(batsmanRow.length);
 
     let opponentName = opponentTeam;
+
     let runs = selTool(batsmanRow[2]).text();
     let balls = selTool(batsmanRow[3]).text();
     let fours = selTool(batsmanRow[5]).text();
@@ -51,6 +51,8 @@ function fillJsonWithStats(batsmanTeam, opponentTeam, batsmanName, currentTeam_b
 
     let result = selTool(".match-info.match-info-MATCH .status-text").text();
 
+    let objArr = [];
+
     let obj = {
         "opponentName": opponentName,
         "runs": runs,
@@ -63,9 +65,20 @@ function fillJsonWithStats(batsmanTeam, opponentTeam, batsmanName, currentTeam_b
         "result": result
     }
     objArr.push(obj);
-
+    
     let file_path = path.join(__dirname, iplFolderName, batsmanTeam, batsmanName + ".json");
-    fs.writeFileSync(file_path, JSON.stringify(objArr));
+
+    let data = fs.readFileSync(file_path, "UTF-8");
+
+    if(data.length == 0){
+        data = [];
+    }
+    else{
+        // console.log(data);
+        data = JSON.parse(data);
+    }
+    data.push(obj);
+    fs.writeFileSync(file_path, JSON.stringify(data));
 }
 
 function gotMatchLinkHTML(html){
@@ -88,7 +101,7 @@ function gotMatchLinkHTML(html){
         for(let j=0; j<currentTeam_batsmen.length-1; j+=2){ // get relevant batsmen row
             let batsmenAnchor = selTool(currentTeam_batsmen[j]).find("a");
             
-            let batsmanName = selTool(batsmenAnchor).text().trim();
+            let batsmanName = selTool(batsmenAnchor).text();
             // let batsmenLink = selTool(batsmenAnchor).attr("href");
 
             createJSON(selTool(bothTeams[i]).text(), batsmanName);
@@ -137,4 +150,3 @@ request(url, function(err, response, html){
         getAllMatches(html);
     }
 })
-
