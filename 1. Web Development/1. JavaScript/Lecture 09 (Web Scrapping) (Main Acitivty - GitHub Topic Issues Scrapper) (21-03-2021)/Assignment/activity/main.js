@@ -34,6 +34,20 @@ function gotMatchLinkHTML(html){
 
     createDir(team1_Name);
     createDir(team2_Name);
+
+    let batsmenContainer = selTool(".table.batsman"); // get both team batsmen tables
+    for(let i=0; i<batsmenContainer.length; i++){
+        let team1_batsmen = selTool(batsmenContainer[i]).find("tbody tr"); // for every table get all batsmeen data
+        
+        for(let j=0; j<team1_batsmen.length; j+=2){ // get relevant batsmen row
+            let batsmenAnchor = selTool(team1_batsmen[j]).find("a");
+            
+            let batsmenName = selTool(batsmenAnchor).text();
+            let batsmenLink = selTool(batsmenAnchor).attr("href");
+
+            createJSON(selTool(bothTeams[i]).text(), batsmenName);
+        }
+    }
 }
 
 function getMatchLinkHTML(fullLink){
