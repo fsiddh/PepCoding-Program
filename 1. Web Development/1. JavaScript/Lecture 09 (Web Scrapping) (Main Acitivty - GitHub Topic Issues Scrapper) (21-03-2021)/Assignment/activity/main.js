@@ -68,17 +68,22 @@ function fillJsonWithStats(batsmanTeam, opponentTeam, batsmanName, currentTeam_b
     
     let file_path = path.join(__dirname, iplFolderName, batsmanTeam, batsmanName + ".json");
 
-    let data = fs.readFileSync(file_path, "UTF-8");
-
-    if(data.length == 0){
-        data = [];
+    if(fs.existsSync(file_path) == false){
+        fs.writeFileSync(file_path, JSON.stringify(objArr));
     }
     else{
-        // console.log(data);
-        data = JSON.parse(data);
+
+        let data = fs.readFileSync(file_path, "UTF-8");
+        if(data.length == 0){
+            data = [];
+        }
+        else{
+            // console.log(data);
+            data = JSON.parse(data);
+        }
+        data.push(obj);
+        fs.writeFileSync(file_path, JSON.stringify(data));
     }
-    data.push(obj);
-    fs.writeFileSync(file_path, JSON.stringify(data));
 }
 
 function gotMatchLinkHTML(html){
