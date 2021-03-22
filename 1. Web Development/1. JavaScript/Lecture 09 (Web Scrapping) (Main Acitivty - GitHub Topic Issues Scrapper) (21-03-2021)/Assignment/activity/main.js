@@ -54,15 +54,16 @@ function fillJsonWithStats(batsmanTeam, opponentTeam, batsmanName, currentTeam_b
     let objArr = [];
 
     let obj = {
-        "opponentName": opponentName,
-        "runs": runs,
-        "balls": balls,
-        "fours": fours,
-        "sixes": sixes,
-        "sr": sr,
-        "date": date,
-        "venue": venue,
-        "result": result
+        "My Team Name": batsmanTeam,
+        "Opponent Team Name": opponentName,
+        "Runs": runs,
+        "Balls": balls,
+        "4s": fours,
+        "6s": sixes,
+        "SR": sr,
+        "Date": date,
+        "Venue": venue,
+        "Result": result
     }
     objArr.push(obj);
     
