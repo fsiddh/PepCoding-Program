@@ -3,7 +3,7 @@ let myVar = 10;
 console.log("12", myVar);
 
 function b() {
-    // console.log("2", myVar);
+    console.log("2", myVar);
     let myVar = 20;
     console.log("8", myVar);
     function c() {
