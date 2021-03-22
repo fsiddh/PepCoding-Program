@@ -51,7 +51,7 @@ function fillJsonWithStats(batsmanTeam, opponentTeam, batsmanName, currentTeam_b
 
     let result = selTool(".match-info.match-info-MATCH .status-text").text();
 
-    objArr.push({
+    let obj = {
         "opponentName": opponentName,
         "runs": runs,
         "balls": balls,
@@ -61,7 +61,8 @@ function fillJsonWithStats(batsmanTeam, opponentTeam, batsmanName, currentTeam_b
         "date": date,
         "venue": venue,
         "result": result
-    })
+    }
+    objArr.push(obj);
 
     let file_path = path.join(__dirname, iplFolderName, batsmanTeam, batsmanName + ".json");
     fs.writeFileSync(file_path, JSON.stringify(objArr));
