@@ -1,180 +1,147 @@
-const url = "https://github.com/topics";
-const request = require("request");
-const cheerio = require("cheerio");
-const fs = require("fs");
-const path = require("path");
-const pdfKit = require("pdfkit");
+let url = "https://github.com/topics";
+let request = require("request");
+let cheerio = require("cheerio");
+let fs = require("fs");
+let path = require("path");
+let pdfDocument = require("pdfkit");
 
-console.log("Before");
 
-function createDir(topicName){
-    let folder_path = path.join(__dirname, topicName);
-
-    if(fs.existsSync(folder_path) == false){
-        fs.mkdirSync(folder_path);
+function dirCreator(topicName){
+    let pathOfFolder = path.join(__dirname, topicName);
+    if(fs.existsSync(topicName) == false){
+        fs.mkdirSync(pathOfFolder);
     }
 }
 
-function createFile(topicName, repoName){
-    let file_path = path.join(__dirname, topicName, repoName + ".json");
-
-    if(fs.existsSync(file_path) == false){
-        let file = fs.createWriteStream(file_path);
+function fileCreator( repoName,topicName){
+    let filePath = path.join(__dirname, topicName, repoName + ".json");
+    if(fs.existsSync(filePath) == false){
+        let file = fs.createWriteStream(filePath); 
         file.end();
     }
 }
 
-request(url, function(error, response, html) {
-    if (error) {
-        console.log(error)
-    } else {
-        // console.log(html);
-        extractHtml(html);
+function extractRepoIssues(html,topicName,repoName){
+    let selectorTool = cheerio.load(html);
+    let issues = selectorTool(".Link--primary.v-align-middle.no-underline.h4.js-navigation-open.markdown-title");
+    let issueObj = [];
+
+    for(let i=0;i<issues.length;i++){
+        let issueName = selectorTool(issues[i]).text();
+        let issueLink = "https://github.com" + selectorTool(issues[i]).attr("href");
+        // console.log(topicName+":"+issueName+":"+issueLink);
+
+        let obj = {
+            "Name" : issueName,
+            "Link" : issueLink,
+        }
+        issueObj.push(obj);
     }
-})
+    // console.log(topicName);
+    // console.table(issueObj);
+    // console.log("========================");
 
-// topic names and their resp. links
-function extractHtml(html){
-    // console.log(topicNamesArray);
+    // ==========================================JSON Creation=============================================================
+    let file_path = path.join(__dirname, topicName, repoName + ".json");
+    fs.writeFileSync(file_path, JSON.stringify(issueObj));
 
-    let selTool = cheerio.load(html);
-    let allTopics = selTool(".col-12.col-sm-6.col-md-4.mb-4");
-    // console.log(allTopics.length);
 
-    for(let i=0; i<allTopics.length; i++){
-        let currentTopicData = selTool(allTopics[i]).find(".f3.lh-condensed.text-center.Link--primary.mb-0.mt-1");
-        let currentTopicName = selTool(currentTopicData).text().trim();
-
-        createDir(currentTopicName);
-
-        let currentTopicLink = selTool(allTopics[i]).find(".no-underline.d-flex.flex-column.flex-justify-center").attr("href");
-        let fullLink = "https://github.com" + currentTopicLink;
-
-        // console.log(currentTopicName);
-        // console.log(fullLink);
-        // console.log();
-
-        navigateToTopicHelper(currentTopicName, fullLink);
-    }
+    //==========================================PDF CREATION===============================================================
+    // let filePath = path.join(__dirname,topicName,repoName+".pdf");
+    // let pdfDoc = new pdfDocument;
+    // pdfDoc.pipe(fs.createWriteStream(filePath));
+    // pdfDoc.text(JSON.stringify(issueObj));
+    // pdfDoc.end();
 }
 
-function navigateToTopicHelper(topicName, fullLink){
-    request(fullLink, function(error, response, html){
+function getallIssues(issueLink,topicName,repoName){
+    request(issueLink, function(error,response,html){
+        if(error){
+            // if(response.status== 404){
+            //     console.log("No issue page found");
+            // }
+            // else{
+            console.log(error);
+            //}
+        }
+        else{
+            extractRepoIssues(html,topicName,repoName);
+        }
+    });
+}
+
+function extractIssue(html,topicName,repoName){
+    let selectorTool = cheerio.load(html);
+
+    let allLinks = selectorTool(".UnderlineNav-body.list-style-none .d-flex");
+    let issueLink = selectorTool(allLinks[1]).find("a");
+    issueLink = "https://github.com" + selectorTool(issueLink).attr("href");
+
+    getallIssues(issueLink,topicName,repoName);
+}
+
+function getIssue(repositoryLink,topicName,repoName){
+    request(repositoryLink, function(error,response,html){
         if(error){
             console.log(error);
         }
         else{
-            navigateToTopic(html, topicName);
+            extractIssue(html,topicName,repoName);
         }
-    })
+    });
 }
 
-function navigateToTopic(html, topicName){
-    let selTool = cheerio.load(html);
-    let allRepo = selTool(".d-flex.flex-justify-between.my-3");
 
-    // console.log(allRepo.length);
+function extractRepoLink(html){
+    let selectorTool = cheerio.load(html);
+    let topicName = selectorTool(".h1-mktg").text().trim();
 
-    for(let i=0; i<8; i++){
-        let repoLink = selTool(allRepo[i]).find(".text-bold").attr("href");
-        let repoName = repoLink.split("/").pop();
+    // console.log(topicName);
 
-        createFile(topicName, repoName);
+    dirCreator(topicName);
 
-        // console.log(repoName);
-        // console.log(repoLink);
-        // console.log("https://github.com" + repoLink);
+    let allRepos = selectorTool(".border.rounded.color-shadow-small.color-bg-secondary.my-4"); 
 
-        let fullRepoLink = "https://github.com" + repoLink;
-        
-        navigateToRepoHelper(topicName, repoName, fullRepoLink);
+    for(let i=0;i<8;i++){
+        let allATag = selectorTool(allRepos[i]).find("a");
+        let repositoryLink = selectorTool(allATag[1]).attr("href");
+        let repoName = repositoryLink.split("/").pop();
+        repoName = repoName.trim();
+
+        fileCreator(repoName, topicName);
+
+        repositoryLink = "https://github.com" + repositoryLink;
+        getIssue(repositoryLink,topicName,repoName); 
     }
-    // console.log();
 }
 
-function navigateToRepoHelper(topicName, repoName, fullRepoLink){
-    request(fullRepoLink, function(err, response, html){
-        if(err){
-            console.log(err);
+function getRepoHelper(link){
+    request(link,cb);
+    function cb(error,response,html){
+        if(error){
+            console.log(error);
+        }else{
+            extractRepoLink(html); 
         }
-        else{
-            navigateToRepo(html, topicName, repoName);
-        }
-    })
-}
-
-function navigateToRepo(html, topicName, repoName){
-    let selTool = cheerio.load(html);
-    
-    // let repoName = selTool("mr-2 flex-self-stretch a").text();
-    // console.log(repoName);
-
-    let allfuncIncludingIssues = selTool(".UnderlineNav-body.list-style-none .d-flex");
-    let issueLink = selTool(allfuncIncludingIssues[1]).find("a").attr("href").trim();
-    let fullIssueLink = "https://github.com" + issueLink;
-
-    // console.log(issueLink);
-    // console.log(fullIssueLink);
-    // console.log(topicName + ": " + fullIssueLink);
-
-    navigateToIssueHelper(fullIssueLink, topicName, repoName);
-}
-
-function navigateToIssueHelper(fullIssueLink, topicName, repoName){
-    request(fullIssueLink, function(err, response, html){
-        if(err){
-            console.log(err);
-        }
-        else{
-            navigateToIssue(html, topicName, repoName);
-        }
-    })
-}
-
-function navigateToIssue(html, topicName, repoName){
-    let selTool = cheerio.load(html);
-
-    let allIssues = selTool(".Link--primary.v-align-middle.no-underline.h4.js-navigation-open.markdown-title");
-    // console.log(allIssues.length);
-
-    let issueArr = [];
-
-    for(let i=0; i<allIssues.length; i++){
-        let issueName = selTool(allIssues[i]).text();
-        let issueLink = selTool(allIssues[i]).attr("href");
-        let fullIssueLink = "https://github.com" + issueLink;
-
-        // console.log("Topic:" + topicName);
-        // console.log("IssueName: " + issueName);
-        // console.log("IssueLink: " + fullIssueLink);
-        // console.log();
-        
-        let issueObj = {
-            "Topic": topicName,
-            "Repository Name": repoName,
-            "Name": issueName,
-            "Link": fullIssueLink
-        };
-
-        issueArr.push(issueObj);
     }
+}
 
-    // ========================= JSON CREATION ==========================
-    let file_path = path.join(__dirname, topicName, repoName + ".json");
-    fs.writeFileSync(file_path, JSON.stringify(issueArr));
-    
-    // ========================= PDF CREATION ==========================
-    // let file_path = path.join(__dirname, topicName, repoName + ".pdf");
-    // let pdf_doc = new pdfKit;
-    // pdf_doc.pipe(fs.createWriteStream(file_path));
-    // pdf_doc.text(JSON.stringify(issueArr));
-    // pdf_doc.end();
+function extractTopicLink(html){
+    let selectorTool = cheerio.load(html);
+    let topics= selectorTool(".col-12.col-sm-6.col-md-4.mb-4 a");
+    for(let i=0; i<topics.length; i++){
+        let topiclink = "https://github.com" + selectorTool(topics[i]).attr("href");
+        getRepoHelper(topiclink);
+    }
+}
 
-    // console.log("---------------------------------------------");
-    // console.table(issueArr);
-    // return issueArr;
-
+request(url,callback); // callback is a function passed into another function as an argument to be executed later
+function callback(error,response,html){
+    if(error){
+        console.log(error);
+    }else{
+        extractTopicLink(html) ;
+    }
 }
 
 
-console.log("After");
