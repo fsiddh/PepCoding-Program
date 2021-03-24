@@ -16,3 +16,8 @@ All the study material and the assignments which I made/ got and did respectivel
 
 <img src="raw/images/flow.png" alt="Smiley face" height="1000" width="1200">
 
+
+## How to efficiently use the Resources:
+
+<p> Modules will contain 2 type of Folders, one for Test and it's Theory, and the other for Activites and Assignments. </p>
+<p> (All Test Theory Lectures discussed will be inside "Lecture 00" along with test references, question and solution. And these Lectures will also be available outside of "Lecture 00" for continuity.) </p>
