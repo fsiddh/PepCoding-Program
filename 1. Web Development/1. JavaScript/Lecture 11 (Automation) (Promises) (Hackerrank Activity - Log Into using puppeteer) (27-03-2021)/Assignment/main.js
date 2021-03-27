@@ -1,15 +1,15 @@
 let puppeteer = require("puppeteer");
-let { email, password } = require("../../secrets"); // imported email & paswrd
+let { email, password } = require("../secrets"); // imported email & paswrd
 let global_tab; // to keep info of TAB we'll work on
 
 console.log("before");
 
 // Launched Browser
-let browserPromise = puppeteer.launch({
+let browser_Promise = puppeteer.launch({
 	headless: false, // ":false" s Automation hote hue dikhta hai
 });
 
-browserPromise
+browser_Promise
 	.then(function (browserReference) {
 		// after launch -> we'll get browser's refrnce
 		let newTab_Promise = browserReference.newPage(); // ".newPage()"(returns promise) for opening new TAB
@@ -47,6 +47,36 @@ browserPromise
 			".ui-btn.ui-btn-large.ui-btn-primary.auth-button.ui-btn-styled"
 		); // Perform a mouse click event on the element passed as parameter
 		return loginButtonWillBeClicked_Promise;
+	})
+	.then(function () {
+		console.log("Login Done");
+
+		let interviewPrepKit_Promise = global_tab.click(
+			".ui-content.align-icon-right"
+		);
+
+		let x = global_tab.goto("ui-btn ui-btn-normal ui-btn-large ui-btn-primary ui-btn-link ui-btn-styled").attr
+		return interviewPrepKit_Promise;
+	})
+	.then(function () {
+		console.log("Entered Interview Kit Page.");
+
+		let warmUpChalnges_Promise = global_tab.click(
+			".ui-content.align-icon-right"
+		);
+		return warmUpChalnges_Promise;
+	})
+	.then(function () {
+		console.log("Entered WarmUP Challenges Page");
+
+		let firstQs_Promise = global_tab.click(
+			".ui-btn.ui-btn-normal.primary-cta.ui-btn-primary.ui-btn-styled"
+		);
+	})
+	.then(function(){
+		console.log("Entered 1st Question");
+
+		let editorial_Promise = global_tab.click(".")
 	})
 	.then(function () {
 		console.log("Login Completed");
