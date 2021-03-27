@@ -4,12 +4,13 @@ let global_tab; // to keep info of TAB we'll work on
 
 console.log("before");
 
+
 // Launched Browser
-let browser_Promise = puppeteer.launch({
+let browserPromise = puppeteer.launch({
 	headless: false, // ":false" s Automation hote hue dikhta hai
 });
 
-browser_Promise
+browserPromise
 	.then(function (browserReference) {
 		// after launch -> we'll get browser's refrnce
 		let newTab_Promise = browserReference.newPage(); // ".newPage()"(returns promise) for opening new TAB
@@ -28,7 +29,7 @@ browser_Promise
 
 		// type -> Types into a selector that identifies a form element
 		let emailWillBeTyped_Promise = global_tab.type("#input-1", email, {
-			delay: 200,
+			delay: 100,
 		}); // type(tag, email id , delay rate for typing)
 		return emailWillBeTyped_Promise;
 	})
@@ -36,50 +37,74 @@ browser_Promise
 		console.log("email Entered!");
 
 		let passwordWillBeType_Promise = global_tab.type("#input-2", password, {
-			delay: 200,
+			delay: 100,
 		});
 		return passwordWillBeType_Promise;
 	})
 	.then(function () {
 		console.log("password Entered");
 
-		let loginButtonWillBeClicked_Promise = global_tab.click(
-			".ui-btn.ui-btn-large.ui-btn-primary.auth-button.ui-btn-styled"
-		); // Perform a mouse click event on the element passed as parameter
-		return loginButtonWillBeClicked_Promise;
+		// Perform a mouse click event on the element passed as parameter
+		let loginButton_Promise = Promise.all([
+			global_tab.waitForNavigation(),
+			global_tab.click(
+				".ui-btn.ui-btn-large.ui-btn-primary.auth-button.ui-btn-styled"
+			),
+		]);
+
+		return loginButton_Promise;
 	})
 	.then(function () {
-		console.log("Login Done");
+		console.log("logged in");
 
-		let interviewPrepKit_Promise = global_tab.click(
-			".ui-content.align-icon-right"
-		);
-
-		let x = global_tab.goto("ui-btn ui-btn-normal ui-btn-large ui-btn-primary ui-btn-link ui-btn-styled").attr
-		return interviewPrepKit_Promise;
+		let preparationKit_Promise = Promise.all([
+			global_tab.waitForNavigation(),
+			global_tab.click(
+				".ui-btn.ui-btn-normal.ui-btn-large.ui-btn-primary.ui-btn-link.ui-btn-styled"
+			),
+		]);
+		return preparationKit_Promise;
 	})
 	.then(function () {
-		console.log("Entered Interview Kit Page.");
+		console.log("Interview Page");
 
-		let warmUpChalnges_Promise = global_tab.click(
-			".ui-content.align-icon-right"
-		);
-		return warmUpChalnges_Promise;
+		let warmupPageWillBeOpened_Promise = Promise.all([
+			global_tab.waitForNavigation(),
+			global_tab.click(
+				".ui-btn.ui-btn-normal.playlist-card-btn.ui-btn-primary.ui-btn-link.ui-btn-styled"
+			),
+		]);
+
+		return warmupPageWillBeOpened_Promise;
 	})
 	.then(function () {
-		console.log("Entered WarmUP Challenges Page");
+		console.log("warmup page");
 
-		let firstQs_Promise = global_tab.click(
-			".ui-btn.ui-btn-normal.primary-cta.ui-btn-primary.ui-btn-styled"
-		);
-	})
-	.then(function(){
-		console.log("Entered 1st Question");
+		let salesPageWillBeOpened_Promise = setTimeout(function () {
+			Promise.all([
+				global_tab.waitForNavigation(),
+				global_tab.click(
+					".recommended-challenge.pjB .js-track-click.challenge-list-item"
+				),
+			]);
+		}, 2000);
 
-		let editorial_Promise = global_tab.click(".")
+		return salesPageWillBeOpened_Promise;
 	})
 	.then(function () {
-		console.log("Login Completed");
+		console.log("sales page");
+
+		let editorialWillBeOpened_Promise = setTimeout(function () {
+			Promise.all([
+				global_tab.waitForNavigation(),
+				global_tab.click("#tab-1-item-4"),
+			]);
+		}, 3000);
+
+		return editorialWillBeOpened_Promise;
+	})
+	.then(function () {
+		console.log("Entered Editorial");
 	})
 	.catch(function (err) {
 		console.log(err);
