@@ -1,7 +1,7 @@
 let puppeteer = require("puppeteer");
 
 // To launch Browser
-let browserWillBeLaunchedPromise = puppeteer.launch({
+let browserWillBeLaunchedPromise = puppeteer.launch({ 
     headless: false
 })
 
