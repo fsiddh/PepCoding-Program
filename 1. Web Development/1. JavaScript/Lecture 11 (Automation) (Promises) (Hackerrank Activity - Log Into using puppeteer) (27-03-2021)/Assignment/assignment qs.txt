@@ -1,4 +1,4 @@
-1. Automate login
+1. Automate login ("https://www.hackerrank.com/auth/login?h_l=body_middle_left_button&h_r=login")
 2. go to inket prep kit page
 3. go to warm up page
 4. select 1st qs
