@@ -111,7 +111,7 @@ browserPromise
 	.then(function () {
 		console.log("Warm Up page Opened!");
 
-		let clickQs_Promise = global_tab("a[data-attr1='sock-merchant']");
+		let clickQs_Promise = global_tab.click("a[data-attr1='sock-merchant']");
 
 		let combined_Promise = Promise.all([
 			clickQs_Promise,
@@ -119,6 +119,9 @@ browserPromise
 		]);
 
 		return combined_Promise;
+	})
+	.then(function () {
+		console.log("Entered Question's page!");
 	})
 	.catch(function (err) {
 		console.log(err);
