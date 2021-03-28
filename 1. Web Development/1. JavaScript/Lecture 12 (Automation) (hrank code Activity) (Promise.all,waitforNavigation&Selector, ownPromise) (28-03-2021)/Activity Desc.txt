@@ -1,0 +1,4 @@
+1. Automate login ("https://www.hackerrank.com/auth/login?h_l=body_middle_left_button&h_r=login")
+2. Navigate to interview prep kit page
+3. Navigate to warm up page
+4. select all qs one by one then submit code
