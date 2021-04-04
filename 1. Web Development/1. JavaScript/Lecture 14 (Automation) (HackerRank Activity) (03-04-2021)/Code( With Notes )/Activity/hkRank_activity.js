@@ -32,7 +32,7 @@ browserPromise
 
 		// type -> Types into a selector that identifies a form element
 		let emailWillBeTyped_Promise = global_tab.type("#input-1", email, {
-			delay: 100,
+			delay: 50,
 		}); // type(tag, email id , delay rate for typing)
 		return emailWillBeTyped_Promise;
 	})
@@ -40,7 +40,7 @@ browserPromise
 		console.log("email Entered!");
 
 		let passwordWillBeType_Promise = global_tab.type("#input-2", password, {
-			delay: 100,
+			delay: 50,
 		});
 		return passwordWillBeType_Promise;
 	})
@@ -49,90 +49,41 @@ browserPromise
 
 		let loginButtonWillBeClicked_Promise = global_tab.click(
 			".ui-btn.ui-btn-large.ui-btn-primary.auth-button.ui-btn-styled"
-		); // Perform a mouse click event on the element passed as parameter
-
-		// waits -> html selectors to load
-		let interviewKitElem_Promise = global_tab.waitForSelector(
-			".card-content h3[title='Interview Preparation Kit']",
-			{
-				visible: true, // when UI appears, only then proceed
-			}
 		);
 
-		// combined_Promise executes only when all promises inside of it gets resolved.
-		// Jab sare promises resolves ho jaye return cP. This ensures click is resolved, apn agle page pr
-		// pohoch jaye and finally us next pg ka data load ho jaye.
-		let combined_Promise = Promise.all([
-			loginButtonWillBeClicked_Promise, //promise for click event
-			global_tab.waitForNavigation({ waitUntil: "networkidle0" }), //promise for navigation event
-			interviewKitElem_Promise, //promise for html selector of interview kit pg
-		]);
-
-		return combined_Promise;
+		return loginButtonWillBeClicked_Promise;
 	})
 	.then(function () {
 		console.log("Login Completed. Dashboard Page Opened!");
 
-		// promise -> interview click event
-		let interviewKitclick_Promise = global_tab.click(
+		let wait_click_pkit = waitAndClick(
 			".card-content h3[title='Interview Preparation Kit']"
 		);
-
-		// promise -> warmup page html load
-		let warmUpElem_Promise = global_tab.waitForSelector(
-			"a[data-attr1='warmup']",
-			{
-				visible: true,
-			}
-		);
-
-		let combined_Promise = Promise.all([
-			interviewKitclick_Promise,
-			global_tab.waitForNavigation({ waitUntil: "networkidle0" }),
-			warmUpElem_Promise,
-		]);
-
-		return combined_Promise;
+		return wait_click_pkit;
 	})
 	.then(function () {
 		console.log("Interview Preparation Kit page Opened.");
 
-		// promise -> warmup button click
-		let warmUpclick_Promise = global_tab.click("a[data-attr1='warmup']");
-
-		// promise -> next page html load
-		let sockMerchantElem_Promise = global_tab.waitForSelector(
-			"a[data-attr1='sock-merchant']",
-			{
-				visible: true,
-			}
-		);
-
-		let combined_Promise = Promise.all([
-			warmUpclick_Promise,
-			global_tab.waitForNavigation({ waitUntil: "networkidle0" }),
-			sockMerchantElem_Promise,
-		]);
-
-		return combined_Promise;
+		let wait_click_warmup = waitAndClick("a[data-attr1='warmup']");
+		return wait_click_warmup;
 	})
 	.then(function () {
 		console.log("Warm Up page Opened!");
-
-		let clickQs_Promise = global_tab.click("a[data-attr1='sock-merchant']");
-
-		let combined_Promise = Promise.all([
-			clickQs_Promise,
-			global_tab.waitForNavigation({ waitUntil: "networkidle0" }),
-		]);
-
-		return combined_Promise;
-	})
-	.then(function () {
-		console.log("Entered question page!!!!!!!!!!!!!!!!!!!!!!!!");
 	})
 	.catch(function (err) {
 		console.log(err);
 	});
 
-console.log("after");
+function waitAndClick(selector) {
+	return new Promise(function (resolve, reject) {
+		let selectorWaitPromise = global_tab.waitForSelector(selector, {
+			visible: true,
+		});
+		selectorWaitPromise.then(function () {
+			let selectorClickPromise = global_tab.click(selector);
+			selectorClickPromise.then(function () {
+				resolve();
+			});
+		});
+	});
+}
