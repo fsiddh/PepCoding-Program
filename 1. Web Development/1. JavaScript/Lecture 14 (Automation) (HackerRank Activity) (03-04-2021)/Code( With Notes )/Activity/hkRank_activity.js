@@ -81,9 +81,13 @@ function waitAndClick(selector) {
 		});
 		selectorWaitPromise.then(function () {
 			let selectorClickPromise = global_tab.click(selector);
-			selectorClickPromise.then(function () {
-				resolve();
-			});
+			selectorClickPromise
+				.then(function () {
+					resolve();
+				})
+				.catch(function () {
+					reject(err);
+				});
 		});
 	});
 }
