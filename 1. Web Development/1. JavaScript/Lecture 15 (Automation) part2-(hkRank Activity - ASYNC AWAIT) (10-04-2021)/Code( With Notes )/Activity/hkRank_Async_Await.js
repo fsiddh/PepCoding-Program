@@ -3,12 +3,13 @@ const { email, password } = require("../../secrets");
 const { codes } = require("./code");
 
 let global_tab;
+let warmupPageUrl;
 
 console.log("before");
 
 (async function () {
 	try {
-		await puppeteer.launch({
+		let browserReference = await puppeteer.launch({
 			headless: false,
 			defaultViewport: null,
 			args: ["--start-maximized", "--incognito"],
@@ -20,9 +21,7 @@ console.log("before");
 		);
 		await global_tab.type("#input-1", email, { delay: 100 });
 		await global_tab.type("#input-2", password, { delay: 100 });
-		await global_tab.click(
-			".ui-btn.ui-btn-large.ui-btn-primary.auth-button.ui-btn-styled"
-		);
+		await global_tab.click("button[data-analytics='LoginPassword']");
 		await waitAndClick(
 			".card-content h3[title='Interview Preparation Kit']"
 		);
@@ -32,8 +31,8 @@ console.log("before");
 		for (let i = 0; i < codes.length; i++) {
 			await questionSolver(codes[i].qName, codes[i].soln, warmupPageUrl);
 		}
-	} catch {
-		console.log("error");
+	} catch (err) {
+		console.log(err);
 	}
 })();
 
@@ -66,8 +65,8 @@ async function questionSolver(quesName, quesCode, url) {
 		await global_tab.keyboard.press("a");
 		await global_tab.keyboard.press("v");
 		await global_tab.click(".pull-right.btn.btn-primary.hr-monaco-submit");
-	} catch {
-		console.log("error");
+	} catch (err) {
+		console.log(err);
 	}
 }
 
