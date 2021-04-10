@@ -85,20 +85,22 @@ browserPromise
 		warmupPageUrl = global_tab.url();
 
 		let code = codes[0];
-		let firstq_questionPromise = questionSolver(
+		let first_questionPromise = questionSolver(
 			code.qName,
 			code.soln,
 			warmupPageUrl
 		);
 		for (let i = 1; i < codes.length; i++) {
-			firstq_questionPromise = questionSolver(
-				codes[i].qName,
-				codes[i].soln,
-				warmupPageUrl
-			);
+			first_questionPromise = first_questionPromise.then(function () {
+				return questionSolver(
+					codes[i].qName,
+					codes[i].soln,
+					warmupPageUrl
+				);
+			});
 		}
 
-		return firstq_questionPromise;
+		return first_questionPromise;
 	})
 	.then(function () {
 		console.log("All Questions Submitted!");
