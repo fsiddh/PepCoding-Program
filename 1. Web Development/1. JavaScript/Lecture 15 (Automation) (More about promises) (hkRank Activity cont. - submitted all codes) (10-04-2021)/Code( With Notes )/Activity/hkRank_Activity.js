@@ -84,7 +84,7 @@ browserPromise
 		// instead of going back , directly go to warmupPage using the stored url
 		warmupPageUrl = global_tab.url();
 
-		let code = codes[0];
+		let code = codes[0]; 
 		let first_questionPromise = questionSolver(
 			code.qName,
 			code.soln,

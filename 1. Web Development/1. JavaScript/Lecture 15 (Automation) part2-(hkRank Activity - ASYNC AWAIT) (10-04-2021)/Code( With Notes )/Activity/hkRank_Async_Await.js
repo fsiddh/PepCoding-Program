@@ -72,6 +72,7 @@ async function questionSolver(quesName, quesCode, url) {
 
 async function waitAndClick(selector) {
 	await global_tab.waitForSelector(selector, { visible: true });
+	// we didn't wait this promise because we want  the calling perspn to await this promise based async function
 	let click_promise = global_tab.click(selector);
 	return click_promise;
 }
