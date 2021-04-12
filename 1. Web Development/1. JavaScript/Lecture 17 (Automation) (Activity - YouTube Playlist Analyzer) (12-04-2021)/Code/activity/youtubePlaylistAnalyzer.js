@@ -45,7 +45,8 @@ const youtubeLink =
 			"a#video-title",
 			"span.style-scope.ytd-thumbnail-overlay-time-status-renderer"
 		);
-		console.table(listOfVideosArr);
+		// console.table(listOfVideosArr);
+		toExcel(listOfVideosArr);
 	} catch (err) {
 		console.log(err);
 	}
@@ -98,5 +99,15 @@ function getListOfVideos(titleSelector, durationSelector) {
 // Watch Time
 
 // Convert to Excel
+function toExcel(listOfVideosArr) {
+	let binaryWS = XLSX.utils.json_to_sheet(listOfVideosArr);
 
-function toExcel() {}
+	// Create a new Workbook
+	var wb = XLSX.utils.book_new();
+
+	// Name your sheet
+	XLSX.utils.book_append_sheet(wb, binaryWS, "Binary values");
+
+	// export your excel
+	XLSX.writeFile(wb, "Binaire.xlsx");
+}
