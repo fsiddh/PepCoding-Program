@@ -96,3 +96,7 @@ function getListOfVideos(titleSelector, durationSelector) {
 	return titlesDurationArr;
 }
 // Watch Time
+
+// Convert to Excel
+
+function toExcel() {}
