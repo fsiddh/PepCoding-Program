@@ -48,8 +48,8 @@ const xlsx = require("xlsx");
 			"a#video-title",
 			"span.style-scope.ytd-thumbnail-overlay-time-status-renderer"
 		);
-		// console.table(listOfVideosArr);
-		excelWriter(listOfVideosArr);
+		console.table(listOfVideosArr);
+		// excelWriter(listOfVideosArr);
 	} catch (err) {
 		console.log(err);
 	}
