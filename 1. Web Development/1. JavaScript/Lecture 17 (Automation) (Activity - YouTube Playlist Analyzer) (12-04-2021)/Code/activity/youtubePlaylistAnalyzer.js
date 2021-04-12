@@ -1,6 +1,9 @@
 const puppeteer = require("puppeteer");
 const youtubeLink =
 	"https://www.youtube.com/playlist?list=PLRBp0Fe2GpgnIh0AiYKh7o7HnYAej-5ph";
+const path = require("path");
+const fs = require("fs");
+const xlsx = require("xlsx");
 
 // Activity Requirements:
 // 1) No. of videos
@@ -46,7 +49,7 @@ const youtubeLink =
 			"span.style-scope.ytd-thumbnail-overlay-time-status-renderer"
 		);
 		// console.table(listOfVideosArr);
-		toExcel(listOfVideosArr);
+		excelWriter(listOfVideosArr);
 	} catch (err) {
 		console.log(err);
 	}
@@ -99,15 +102,4 @@ function getListOfVideos(titleSelector, durationSelector) {
 // Watch Time
 
 // Convert to Excel
-function toExcel(listOfVideosArr) {
-	let binaryWS = XLSX.utils.json_to_sheet(listOfVideosArr);
-
-	// Create a new Workbook
-	var wb = XLSX.utils.book_new();
-
-	// Name your sheet
-	XLSX.utils.book_append_sheet(wb, binaryWS, "Binary values");
-
-	// export your excel
-	XLSX.writeFile(wb, "Binaire.xlsx");
-}
+function excelWriter(filePath, json, name) {}
