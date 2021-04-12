@@ -1,8 +1,8 @@
 ## YouTube Playlist Analyzer
 
--   Gets the Following details for the passed youtube playlist link:
+**Gets the Following details for the passed youtube playlist link:**
 
-1. Number of Videos<
+1. Number of Videos
 2. Views
 3. Watch Time
 4. List of Videos
