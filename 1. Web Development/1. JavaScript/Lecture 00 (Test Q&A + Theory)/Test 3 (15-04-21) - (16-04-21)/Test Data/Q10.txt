@@ -1,0 +1,74 @@
+// Q -  Implement your own basic version of Promise construct present in JS
+
+// Solution:
+
+//Note: this is a basic version of promise which does not support chaining!
+
+// Promise represents a value which is received after work is done
+// So we need 3 states for this
+
+//the work is still in process
+const PENDING = 0;
+//the work is successfully completed
+const FULFILLED = 1;
+//the work did not complete
+const REJECTED = 2;
+
+// The promise will always be in one of these states
+
+// custom promise constructor ; takes an executor function, this is the function that will actually do the work we want to do like fetch data from database
+// A promise object does not actually do any work but it wraps up the idea of waiting for a work to complete and then doing something after it
+function customPromise(executor) {
+  //initially the state of the promise is pending
+  let state = PENDING;
+  //the value is null
+  let value = null;
+  //handlers is an array of callbacks which will run after the work is done
+  let handlers = [];
+  //catches is an array of callbacks which may run if error occurs during execution of executor
+  let catches = [];
+
+  // resolve is a very important function that executes when the work is successfully done and we have a value
+  // this function is given to the executor so that when executor finishes its work successfully it may call resolve and pass the resulting value to it
+
+  function resolve(result) {
+    // check if the promise is already resolved or not
+    // a promise only calls once either resolve or reject and ignores further calls
+    if (state !== PENDING) return;
+
+    //  if the promise is not resolved, resolve it
+    state = FULFILLED;
+    // set the value to result
+    value = result;
+    // call all the handlers and pass them the resulted value
+    handlers.forEach((h) => h(value));
+  }
+
+  // We can similarly make a reject function
+
+  function reject(err) {
+    if (state !== PENDING) return;
+    state = REJECTED;
+    value = err;
+    catches.forEach((c) => c(err));
+  }
+
+  // A promise object has another important function called then which takes a callback and if the promise is resolved then directly calls the callback passing it the value or if its still pending pass to the handlers array to be called later
+  this.then = function (callback) {
+    if ((state = FULFILLED)) {
+      callback(value);
+    } else {
+      handlers.push(callback);
+    }
+  };
+
+  this.catch = function (callback) {
+    if ((state = REJECTED)) {
+      callback(value);
+    } else {
+      catches.push(callback);
+    }
+  };
+  // A promise represents a process that is already running so when we create a promise it should start the executor function(the task) given to it
+  executor(resolve, reject);
+}

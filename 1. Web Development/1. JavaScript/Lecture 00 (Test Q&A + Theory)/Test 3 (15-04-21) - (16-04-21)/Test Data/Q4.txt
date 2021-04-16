@@ -1,0 +1,49 @@
+// Q find output 
+
+function f(x) {
+    return x*x;
+}
+
+f.description = "This function returns the square"
+
+let arr = [1, 2, 3, 4, 5]
+console.log(arr.length);
+arr.length = 6
+arr.pop()
+console.log(arr.length);
+console.log(f);
+console.log(f());
+console.log(f());
+
+// options:
+// 1)
+    // 5
+    // 5
+    // { [Function: f] description: 'This function returns the square' }
+    // NaN
+    // NaN
+
+// 2)
+    // 5
+    // 6
+    // { [Function: f] description: 'This function returns the square' }
+    // NaN
+    // NaN
+
+// 3)
+    // 5
+    // 5
+    // [Function: f]
+    // NaN
+    // NaN
+
+// 4)
+    // 5
+    // 6
+    // [Function: f]
+    // NaN
+    // NaN
+
+
+Solution:
+1

@@ -1,0 +1,45 @@
+Q- find output 
+
+try {
+  let a = null;
+
+  b = a;
+
+  delete a;
+
+  b = undefined;
+
+  console.log(a);
+  console.log(b);
+  console.log(c);
+} catch (err) {
+  console.log(err.message);
+}
+
+
+options:
+
+1)
+
+Error 
+
+2)
+
+null 
+undefined 
+undeclared 
+
+3) 
+
+undefined
+undefined
+Error 
+
+4)
+
+null
+undefined
+Error 
+
+Solution:
+4

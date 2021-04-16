@@ -1,0 +1,11 @@
+//Q- Write a function that takes 2 number => num1 and num2. The function checks if num1 is even and is divisible by num2 if both conditions are true then it returns the remainder of num1/num2 else it throws an error with the message incompatible types.
+
+Solution:
+
+function f(n1, n2) {
+    if (n1 % 2 === 0 && n1 % n2 === 0) {
+        return 0;
+    } else {
+        throw new Error("incompatible types")
+    }
+}

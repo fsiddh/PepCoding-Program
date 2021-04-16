@@ -1,0 +1,36 @@
+// output statements 
+// comments 
+// let and dynamic behavior 
+// operators 
+// data types 
+// loops 
+// Functions and Function expressions AND IIFE ,arguments 
+// Arrays 
+// Objects 
+// Strings & template Strings 
+// type coercion,nan,infinity,truthy &falsy value
+// scope => block, Function, global, lexical
+// real and fake function
+// arguments array
+// execution context
+// hoisting
+// variables => var, let, const
+// json => parse and stringify 
+
+
+// pure functions
+// mutations and side effects
+// higher order functions 
+// map filter and reduce
+// polyfill
+// closure
+// event loop and async architecture
+// setTimeout and setInterval
+// callbacks
+// promises => then catch finally resolve reject create promise,all,race
+// microtasks
+// thunk
+// shallow copy and deep copy 
+// null vs undefined vs undeclared
+// error handling
+// everything is object or primitive 

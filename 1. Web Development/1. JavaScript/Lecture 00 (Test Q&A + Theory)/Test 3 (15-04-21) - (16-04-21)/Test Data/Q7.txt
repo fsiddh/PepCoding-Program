@@ -1,0 +1,54 @@
+//Q- Without changing the structure of the code move inputs of console statements so that the output ordering is in increasing rather than jumbled
+
+setTimeout(function () {
+  console.log(1);
+});
+setTimeout(function () {
+  console.log(2);
+});
+
+let p = new Promise(function (resolve, reject) {
+  resolve();
+});
+
+console.log(3);
+
+p.then(function () {
+  console.log(4);
+});
+
+p.then(function () {
+  console.log(5);
+});
+
+setTimeout(function () {
+  console.log(6);
+});
+
+
+Solution:
+
+setTimeout(function () {
+  console.log(4);
+});
+setTimeout(function () {
+  console.log(5);
+});
+
+let p = new Promise(function (resolve, reject) {
+  resolve();
+});
+
+console.log(1);
+
+p.then(function () {
+  console.log(2);
+});
+
+p.then(function () {
+  console.log(3);
+});
+
+setTimeout(function () {
+  console.log(6);
+});
