@@ -4,14 +4,14 @@ const outlookLogin =
 	"https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=13&ct=1618666402&rver=7.0.6737.0&wp=MBI_SSL&wreply=https%3a%2f%2foutlook.live.com%2fowa%2f%3fnlp%3d1%26RpsCsrfState%3db9479616-c879-c065-a25e-42d2f4ad6754&id=292841&aadredir=1&CBCXT=out&lw=1&fl=dob%2cflname%2cwld&cobrandid=90015";
 
 async function waitTypeAndEnter(selector, data) {
-    await mail_page.waitForSelector(selector);
+    await mail_page.waitForSelector(selector, { visible: true});
     await mail_page.type(selector, data, { delay: 100 });
     await mail_page.waitForTimeout(1500);
-    return await mail_page.keyboard.press("Enter");
+    return mail_page.keyboard.press("Enter");
 }
 
 async function waitAndClick(selector) {
-    await mail_page.waitForSelector(selector);
+    await mail_page.waitForSelector(selector, { visible: true});
     await mail_page.waitForTimeout(500);
     return mail_page.click(selector);
 }

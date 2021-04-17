@@ -13,13 +13,15 @@ async function takeSS(fileName) {
 }
 
 async function waitTypeAndEnter(selector, data) {
-    await gmap_page.waitForSelector(selector);
+    await gmap_page.waitForSelector(selector, { visible: true});
     await gmap_page.type(selector, data, { delay: 50 });
-    return await gmap_page.keyboard.press("Enter");
+    await gmap_page.waitForTimeout(500);
+    return gmap_page.keyboard.press("Enter");
 }
 
 async function waitAndClick(selector) {
-    await gmap_page.waitForSelector(selector);
+    await gmap_page.waitForSelector(selector, { visible: true});
+    await gmap_page.waitForTimeout(500);
     return gmap_page.click(selector);
 }
 
@@ -56,7 +58,7 @@ async function gMaps(browserRef, hospital_name, hospital_address) {
         let gmapObj = await gmap_page.evaluate(browserGmap);
 
         // Capture SS
-        await takeSS("Hospital_location");
+        await takeSS("hospital_location");
         
         // close page -> return gmap_info
         gmap_page.close();

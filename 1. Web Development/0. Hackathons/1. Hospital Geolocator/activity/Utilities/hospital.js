@@ -1,4 +1,5 @@
 const google_link = "https://www.google.com";
+const googleImg_link = "https://www.google.co.in/imghp?hl=en&ogbl";
 const path = require("path");
 const fs = require("fs");
 
@@ -14,14 +15,25 @@ function createJSON(){
     }
 }
 
+async function takeSS(fileName) {
+    await hospital_page.waitForTimeout(2000);
+    return hospital_page.screenshot({
+        path: path.join(__dirname, informationDirName, fileName + ".jpg"),
+        type: "jpeg",
+    });
+}
+
 async function waitAndClick(selector) {
-    await hospital_page.waitForSelector(selector);
+    await hospital_page.waitForSelector(selector, { visible: true });
+    // await hospital_page.waitForTimeout(500);
     return hospital_page.click(selector);
 }
 
-async function waitAndType(selector, data) {
-    await hospital_page.waitForSelector(selector);
-    return await hospital_page.type(selector, data, { delay: 50 });
+async function waitTypeAndEnter(selector, data) {
+    await hospital_page.waitForSelector(selector, { visible: true});
+    await hospital_page.type(selector, data, { delay: 100});
+    await hospital_page.waitForTimeout(500);
+    return hospital_page.keyboard.press("Enter");
 }
 
 // Things this file extracts about Hospital
@@ -40,9 +52,7 @@ async function hospitalInfo(browserRef) {
 
 		// Nav to google + type + search
         await hospital_page.goto(google_link);
-        await waitAndType(".gLFyf.gsfi", "hospitals near me");
-        await hospital_page.keyboard.press("Enter");
-
+        await waitTypeAndEnter(".gLFyf.gsfi", "hospitals near me");
         
 		// Gather info.
         function browserConsole() {
@@ -64,34 +74,37 @@ async function hospitalInfo(browserRef) {
             return infoObj;
         }
         
-        await hospital_page.waitForSelector(".dbg0pd span");
+        await hospital_page.waitForSelector(".dbg0pd span", { visible: true});
         let infoArr = await hospital_page.evaluate(browserConsole);
 
         // Search for the nearest hospital name and take its ss        
-		await hospital_page.goto(google_link);
-        await hospital_page.type(".gLFyf.gsfi", infoArr.Name, { delay: 50, });
-        await hospital_page.keyboard.press("Enter");
-        await hospital_page.waitForSelector(".kp-blk.knowledge-panel.Wnoohf.OJXvsb");
-        await hospital_page.screenshot({
-            path: path.join(__dirname, informationDirName, "hospital_details" + ".jpg"),
-            type: "jpeg",
-        });
+        await hospital_page.goto(google_link);
+        await waitTypeAndEnter(".gLFyf.gsfi", infoArr.Name);
+        await takeSS("hospital_details");
 
         // Goto Images and take ss
-        await hospital_page.waitForSelector(".hdtb-mitem .hide-focus-ring");
-        function browserImageLink() {
-            imageLink = document.querySelectorAll(".hdtb-mitem .hide-focus-ring")[1].href;
-            return imageLink
-        }
-        let imageBtnLink = await hospital_page.evaluate(browserImageLink);
-        await hospital_page.goto(imageBtnLink);
-        await waitAndClick(".rg_i.Q4LuWd");
+        await hospital_page.goto(googleImg_link);
+        await waitTypeAndEnter(".gLFyf.gsfi", infoArr.Name);
 
-        // Now take ScreenShot and save its image
-        await hospital_page.screenshot({
-            path: path.join(__dirname, informationDirName, "hospital_photo" + ".jpg"),
-            type: "jpeg",
-        });
+        function browserImage() {
+            document.querySelector(".bRMDJf.islir").click();
+        }
+        await hospital_page.waitForSelector(".bRMDJf.islir", { visible: true});
+        await hospital_page.evaluate(browserImage);
+        await hospital_page.waitForTimeout(20000);
+        await takeSS("hospital_photo");
+        
+        // await hospital_page.waitForSelector(".hdtb-mitem .hide-focus-ring");
+        // function browserImageLink() {
+        //     imageLink = document.querySelectorAll(".hdtb-mitem .hide-focus-ring")[1].href;
+        //     return imageLink
+        // }
+        // let imageBtnLink = await hospital_page.evaluate(browserImageLink);
+        // await hospital_page.waitForTimeout(1000);
+        // await hospital_page.goto(imageBtnLink);
+
+        // wait -> Now take ScreenShot and save its image
+        // await takeSS("hospital_photo"); 
 
         // Save infoArr in a JSON obj
         // createJSON();
