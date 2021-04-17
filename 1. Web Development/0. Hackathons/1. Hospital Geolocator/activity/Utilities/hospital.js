@@ -86,12 +86,13 @@ async function hospitalInfo(browserRef) {
         await hospital_page.goto(googleImg_link);
         await waitTypeAndEnter(".gLFyf.gsfi", infoArr.Name);
 
-        function browserImage() {
-            document.querySelector(".bRMDJf.islir").click();
+        function browserImage(selector) {
+            document.querySelector(selector).click();
         }
-        await hospital_page.waitForSelector(".bRMDJf.islir", { visible: true});
-        await hospital_page.evaluate(browserImage);
-        await hospital_page.waitForTimeout(20000);
+        await hospital_page.waitForTimeout(1000);
+        await hospital_page.waitForSelector(".bRMDJf.islir", { visible: true });
+        
+        await hospital_page.evaluate(browserImage, ".bRMDJf.islir");
         await takeSS("hospital_photo");
         
         // await hospital_page.waitForSelector(".hdtb-mitem .hide-focus-ring");
