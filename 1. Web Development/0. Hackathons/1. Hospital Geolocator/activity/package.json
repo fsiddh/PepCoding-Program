@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "fs": "^0.0.1-security",
+    "json2xls": "^0.1.2",
     "puppeteer": "^8.0.0"
   }
 }
