@@ -15,6 +15,7 @@ function createJSON(){
     }
 }
 
+// waits -> takes screeenshot and saves it
 async function takeSS(fileName) {
     await hospital_page.waitForTimeout(2000);
     return hospital_page.screenshot({
@@ -23,12 +24,14 @@ async function takeSS(fileName) {
     });
 }
 
+// waits for selctor to load -> waits -> clicks the selector
 async function waitAndClick(selector) {
     await hospital_page.waitForSelector(selector, { visible: true });
     // await hospital_page.waitForTimeout(500);
     return hospital_page.click(selector);
 }
 
+// waits for selctor to load -> types with normal speed -> waits -> Enter
 async function waitTypeAndEnter(selector, data) {
     await hospital_page.waitForSelector(selector, { visible: true});
     await hospital_page.type(selector, data, { delay: 100});
@@ -77,12 +80,12 @@ async function hospitalInfo(browserRef) {
         await hospital_page.waitForSelector(".dbg0pd span", { visible: true});
         let infoArr = await hospital_page.evaluate(browserConsole);
 
-        // Search for the nearest hospital name and take its ss        
+        // nav google -> Search nearest hospital name -> take ss        
         await hospital_page.goto(google_link);
         await waitTypeAndEnter(".gLFyf.gsfi", infoArr.Name);
         await takeSS("hospital_details");
 
-        // Goto Images and take ss
+        // Goto GoogleImages -> take ss
         await hospital_page.goto(googleImg_link);
         await waitTypeAndEnter(".gLFyf.gsfi", infoArr.Name);
 

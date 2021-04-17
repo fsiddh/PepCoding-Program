@@ -31,16 +31,15 @@ function infoDir(){
         
         // Extract Information on nearby Hospital 
         let hospital_detailsObj = await hospitalFnObj.hospitalFn(browserRef);
-        console.table(hospital_detailsObj);
+        console.log(hospital_detailsObj);
 
         // Extract nearby Hospital route details
-        // let gMaps_link = await gMapsFnObj.gMapsFn(browserRef, hospital_detailsArr.Name);
         let gMaps_infoObj = await gMapsFnObj.gMapsFn(browserRef, hospital_detailsObj.Name, hospital_detailsObj.Address);
         console.log(gMaps_infoObj);
 
         // Send Mail
-        // let temp_recieverEmail = "jasonshaw546@gmail.com"
-        await mailFnObj.mailFn(browserRef, recieverEmail);
+        let mesg = await mailFnObj.mailFn(browserRef, recieverEmail);
+        console.log(mesg);
 
         browserRef.close();
 	} catch (error) {

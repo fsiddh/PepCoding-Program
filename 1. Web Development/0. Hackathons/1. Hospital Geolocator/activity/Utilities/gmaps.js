@@ -4,6 +4,7 @@ const authObj = require("../../auth_details.js");
 const googleMaps_link = "https://www.google.com/maps";
 const informationDirName = "Information";
 
+// waits -> takes screeenshot and saves it
 async function takeSS(fileName) {
     await gmap_page.waitForTimeout(2000);
     return gmap_page.screenshot({
@@ -12,6 +13,7 @@ async function takeSS(fileName) {
     });
 }
 
+// waits for selctor to load -> types with normal speed -> waits -> Enter
 async function waitTypeAndEnter(selector, data) {
     await gmap_page.waitForSelector(selector, { visible: true});
     await gmap_page.type(selector, data, { delay: 50 });
@@ -19,6 +21,7 @@ async function waitTypeAndEnter(selector, data) {
     return gmap_page.keyboard.press("Enter");
 }
 
+// waits for selctor to load -> waits -> clicks the selector
 async function waitAndClick(selector) {
     await gmap_page.waitForSelector(selector, { visible: true});
     await gmap_page.waitForTimeout(500);
@@ -30,17 +33,19 @@ async function gMaps(browserRef, hospital_name, hospital_address) {
 	try {
 		gmap_page = await browserRef.newPage();
 
-		// nav to google maps -> press Enter
+		// nav to google maps -> type hospital name -> press Enter
         await gmap_page.goto(googleMaps_link);
         await waitTypeAndEnter("#searchboxinput", hospital_address);
         
-        // click directions -> type address -> enter -> click 1st route suggestion
+        // click directions -> type address + enter -> click 1st route suggestion
         await waitAndClick("div.iRxY3GoUYUY__taparea");
         await waitTypeAndEnter("#sb_ifc51", authObj.address);
         await waitAndClick("#section-directions-trip-0");
 
         // Extract Information
-        // 1.Duration 2.km
+        // 1.Duration 
+        // 2.km 
+        // 3.Google Maps Link
         function browserGmap() {
             
             let timeToReach = document.querySelector(".section-trip-summary-title span span").innerText;
