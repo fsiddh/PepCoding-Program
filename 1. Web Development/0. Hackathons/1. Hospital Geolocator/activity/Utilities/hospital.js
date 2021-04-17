@@ -1,5 +1,28 @@
 const google_link = "https://www.google.com";
-const puppeteer = require("puppeteer");
+const path = require("path");
+const fs = require("fs");
+
+const informationDirName = "Information";
+const hospitalInfoDir = "hospital_information";
+
+function createJSON(){
+    let filePath = path.join(__dirname, informationDirName, hospitalInfoDir + ".json");
+
+    if(fs.existsSync(filePath) == false){
+        let file = fs.createWriteStream(filePath);
+        file.end();
+    }
+}
+
+async function waitAndClick(selector) {
+    await hospital_page.waitForSelector(selector);
+    return hospital_page.click(selector);
+}
+
+async function waitAndType(selector, data) {
+    await hospital_page.waitForSelector(selector);
+    return await hospital_page.type(selector, data, { delay: 50 });
+}
 
 // Things this file extracts about Hospital
 // 1.Name
@@ -9,45 +32,81 @@ const puppeteer = require("puppeteer");
 // 5.Rating
 // 6.Open duration
 // *finally saves in a pdf*
+
 let hospital_page;
 async function hospitalInfo(browserRef) {
 	try {
 		hospital_page = await browserRef.newPage();
 
-		// Nav to google + auth + type + search
-		await hospital_page.goto(google_link);
-		await hospital_page.type(".gLFyf.gsfi", "hospitals near me", {delay: 50,});
+		// Nav to google + type + search
+        await hospital_page.goto(google_link);
+        await waitAndType(".gLFyf.gsfi", "hospitals near me");
         await hospital_page.keyboard.press("Enter");
 
-        await hospital_page.waitForSelector(".dbg0pd span");
-
-		// Gather info.
-		let h_name = document.querySelector(".dbg0pd span").innerText;
-		let h_rating = document.querySelector(".rllt__details.lqhpac div .BTtC6e").innerText;
-		let h_number = document.querySelectorAll(".rllt__details.lqhpac div")[1].innerText.split("·")[1];
-		let h_address = document.querySelectorAll(".rllt__details.lqhpac div")[1].innerText.split("·")[0];
-		let h_openTimings = document.querySelectorAll(".rllt__details.lqhpac div")[2].innerText;
-
-		let infoObj = {
-			h_name,
-			h_rating,
-			h_number,
-			h_address,
-			h_openTimings,
-        };
         
-        return infoObj;
+		// Gather info.
+        function browserConsole() {
+            
+            let h_name = document.querySelector(".dbg0pd span").innerText;
+            let h_rating = document.querySelector(".rllt__details.lqhpac div .BTtC6e").innerText;
+            let h_number = document.querySelectorAll(".rllt__details.lqhpac div")[1].innerText.split("·")[1];
+            let h_address = document.querySelectorAll(".rllt__details.lqhpac div")[1].innerText.split("·")[0];
+            let h_openTimings = document.querySelectorAll(".rllt__details.lqhpac div")[2].innerText;
+            
+            let infoObj = {
+                "Name": h_name,
+                "Rating": h_rating,
+                "Number": h_number,
+                "Address": h_address,
+                "Timings": h_openTimings,
+            };
+            
+            return infoObj;
+        }
+        
+        await hospital_page.waitForSelector(".dbg0pd span");
+        let infoArr = await hospital_page.evaluate(browserConsole);
+
+        // Search for the nearest hospital name and take its ss        
+		await hospital_page.goto(google_link);
+        await hospital_page.type(".gLFyf.gsfi", infoArr.Name, { delay: 50, });
+        await hospital_page.keyboard.press("Enter");
+        await hospital_page.waitForSelector(".kp-blk.knowledge-panel.Wnoohf.OJXvsb");
+        await hospital_page.screenshot({
+            path: path.join(__dirname, informationDirName, "hospital_details" + ".jpg"),
+            type: "jpeg",
+        });
+
+        // Goto Images and take ss
+        await hospital_page.waitForSelector(".hdtb-mitem .hide-focus-ring");
+        function browserImageLink() {
+            imageLink = document.querySelectorAll(".hdtb-mitem .hide-focus-ring")[1].href;
+            return imageLink
+        }
+        let imageBtnLink = await hospital_page.evaluate(browserImageLink);
+        await hospital_page.goto(imageBtnLink);
+        await waitAndClick(".rg_i.Q4LuWd");
+
+        // Now take ScreenShot and save its image
+        await hospital_page.screenshot({
+            path: path.join(__dirname, informationDirName, "hospital_photo" + ".jpg"),
+            type: "jpeg",
+        });
+
+        // Save infoArr in a JSON obj
+        // createJSON();
+        // let file_path = path.join(__dirname, informationDirName, hospitalInfoDir + ".json");
+        // fs.writeFileSync(file_path, JSON.stringify(infoArr));
+
+        // close page and return hospital information
+        await hospital_page.close();
+        return infoArr;
+        
     } catch (error) {
         console.log(error);
     }
 }
 
-// async function waitAndEnter(selector) {
-// 	await global_tab.waitForSelector(selector, { visible: true });
-// 	// we didn't wait this promise because we want  the calling perspn to await this promise based async function
-// 	let enterPromise = await hospital_page.keyboard.press("Enter");
-// 	return enterPromise;
-// }
 
 module.exports = {
     hospitalFn: hospitalInfo,
