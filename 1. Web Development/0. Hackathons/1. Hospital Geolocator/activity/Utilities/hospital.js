@@ -75,7 +75,7 @@ async function hospitalInfo(browserRef) {
         }
         await hospital_page.waitForSelector(".C8TUKc.rllt__link.a-no-hover-decoration", { visible: true });
         let hospital_namesArr = await hospital_page.evaluate(browserConsole);
-        console.log("Top 3 Hospitals Arr:"+hospital_namesArr);
+        console.log("Top 3 Hospitals Arr: "+hospital_namesArr);
         
         // 3x{nav google -> Search nearest hospital name -> take ss}    
         let hospital_InfoObjArr = [];
@@ -83,6 +83,7 @@ async function hospitalInfo(browserRef) {
             await hospital_page.goto(google_link);
             await waitTypeAndEnter(".gLFyf.gsfi", hospital_namesArr[i]);
             console.log("Searching details for " + hospital_namesArr[i]);
+            console.log("Taking SnapShot!");
             await takeSS(hospital_namesArr[i]+"_details");
 
             function browserInfoConsole() {
@@ -101,7 +102,7 @@ async function hospitalInfo(browserRef) {
                 else {
                     h_rating = document.querySelector("span.Aq14fc").innerText;
                     h_number = document.querySelector(".LrzXr.zdqRlf.kno-fv").innerText;
-                    h_address = document.querySelector(".i4J0ge span.LrzXr").innerText;
+                    h_address = document.querySelector(".Z1hOCe").innerText;
                     h_openTimings = document.querySelector("div.bJpcZ").innerText;
                 }
                 
@@ -139,8 +140,8 @@ async function hospitalInfo(browserRef) {
         }
         
         // close page and return hospital information
-        // await hospital_page.close();
-        return hospital_infoObjArr;
+        await hospital_page.close();
+        return hospital_InfoObjArr;
         
     } catch (error) {
         console.log(error);

@@ -4,8 +4,7 @@ const fs = require("fs");
 
 const hospitalFnObj = require("./Utilities/hospital.js");
 const gMapsFnObj = require("./Utilities/gmaps.js")
-const mailFnObj = require("./Utilities/mail.js")
-const { email, password } = require("../auth_details.js");
+const gmailsendFnObj = require("./Utilities/sendMail.js")
 
 let recieverEmail = process.argv[2];
 
@@ -30,18 +29,20 @@ function infoDir(){
         });
         
         // Extract Information on nearby Hospital 
-        let hospital_detailsObjArr = await hospitalFnObj.hospitalFn(browserRef);
+        let hospital_details_ObjArr = await hospitalFnObj.hospitalFn(browserRef);
         console.log("````````````````````Hospital fn Executed````````````````````");
-        console.log(hospital_detailsObjArr);
-        console.table(hospital_detailsObjArr);
-
+        // console.log(hospital_details_ObjArr);
+        // console.table(hospital_details_ObjArr);
+        
         // // Extract nearby Hospital route details
-        // let gMaps_infoObj = await gMapsFnObj.gMapsFn(browserRef, hospital_detailsObj.Name, hospital_detailsObj.Address);
-        // console.log(gMaps_infoObj);
-
+        let gMaps_info_ObjArr = await gMapsFnObj.gMapsFn(browserRef, hospital_details_ObjArr);
+        console.log("````````````````````GMAPs fn Executed````````````````````");
+        // console.log(gMaps_info_ObjArr);
+        // console.table(gMaps_info_ObjArr);
+        
         // // Send Mail
-        // let mesg = await mailFnObj.mailFn(browserRef, recieverEmail);
-        // console.log(mesg);
+        let mesg = await gmailsendFnObj.gmailsendFn(recieverEmail);
+        console.log(mesg);
 
         // browserRef.close();
 	} catch (error) {
