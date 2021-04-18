@@ -30,18 +30,20 @@ function infoDir(){
         });
         
         // Extract Information on nearby Hospital 
-        let hospital_detailsObj = await hospitalFnObj.hospitalFn(browserRef);
-        console.log(hospital_detailsObj);
+        let hospital_detailsObjArr = await hospitalFnObj.hospitalFn(browserRef);
+        console.log("````````````````````Hospital fn Executed````````````````````");
+        console.log(hospital_detailsObjArr);
+        console.table(hospital_detailsObjArr);
 
-        // Extract nearby Hospital route details
-        let gMaps_infoObj = await gMapsFnObj.gMapsFn(browserRef, hospital_detailsObj.Name, hospital_detailsObj.Address);
-        console.log(gMaps_infoObj);
+        // // Extract nearby Hospital route details
+        // let gMaps_infoObj = await gMapsFnObj.gMapsFn(browserRef, hospital_detailsObj.Name, hospital_detailsObj.Address);
+        // console.log(gMaps_infoObj);
 
-        // Send Mail
-        let mesg = await mailFnObj.mailFn(browserRef, recieverEmail);
-        console.log(mesg);
+        // // Send Mail
+        // let mesg = await mailFnObj.mailFn(browserRef, recieverEmail);
+        // console.log(mesg);
 
-        browserRef.close();
+        // browserRef.close();
 	} catch (error) {
 		console.log(error);
 	}
