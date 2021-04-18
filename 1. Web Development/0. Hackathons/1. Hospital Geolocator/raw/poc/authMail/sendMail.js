@@ -1,13 +1,12 @@
 const nodemailer = require("nodemailer");
 const fs = require("fs");
-const recieverEmail = "falansh.rs@gmail.com";
-
-await gmailsend(recieverEmail);
+const recieverEmail = "testing10200201@outlook.com";
 
 async function gmailsend(recieverEmail) {
-	let data = await fs.promises.readFile(auth_details, "utf-8");
+	let data = await fs.promises.readFile("auth_details.json", "utf-8");
 	let credentials = JSON.parse(data);
-	console.log(credentials);
+	// console.log(credentials);
+
 	email = credentials.email;
 	password = credentials.password;
 
@@ -35,10 +34,8 @@ async function gmailsend(recieverEmail) {
 			console.log("Failed to send email.\n" + err.message);
 			return;
 		}
-		console.log(`Email sent to ${to1} \n check your email.`);
+		console.log(`Email sent to ${recieverEmail} \ncheck your email.`);
+		return;
 	});
 }
-
-module.exports = {
-	gmailsendFn: gmailsend,
-};
+gmailsend(recieverEmail);
