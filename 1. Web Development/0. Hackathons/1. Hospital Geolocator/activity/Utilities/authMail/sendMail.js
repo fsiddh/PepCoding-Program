@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 const fs = require("fs");
-const temp_recieverEmail = "testing10200201@outlook.com";
+// const temp_recieverEmail = "testing10200201@outlook.com";
 
 async function gmailsend(recieverEmail) {
 	let data = await fs.promises.readFile("auth_details.json", "utf-8");
@@ -24,8 +24,8 @@ async function gmailsend(recieverEmail) {
 		text: "Hospital details along with its Images.",
 		attachments: [
 			{
-				filename: "test_file.txt",
-				path: `./test_file.txt`,
+				filename: "hospital_details.pdf",
+				path: `./hospital_details/pdf`,
 			},
 		],
 	};
