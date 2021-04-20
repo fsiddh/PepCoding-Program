@@ -1,4 +1,4 @@
-## Description
+## Activity Description
 
 * Automate login ("https://www.hackerrank.com/auth/login?h_l=body_middle_left_button&h_r=login")
 * Navigate to interview prep kit page
