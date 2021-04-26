@@ -1,55 +1,76 @@
+* {
+	box-sizing: border-box;
+}
 body {
-	margin: 0;
+	margin: 0px;
+	background-color: #ecf0f1;
 }
 
-.colors_container {
-	height: 7vh;
-	background-color: darkslategray;
+.toolbar {
+	height: 12vh;
+	background-color: #2d3436;
 	display: flex;
-	justify-content: flex-start;
+	align-items: center;
+	padding-left: 5rem;
 }
-
-.c1 {
+.filter-container {
+	height: 60%;
+	/* border: 1px solid red; */
+	width: 14rem;
+	margin-right: 4rem;
+	border-radius: 0.2rem;
+	background-color: #6d7c7e;
 	display: flex;
-	justify-content: flex-start;
-	height: 30px;
-	width: 30px;
+}
+.filter {
+	height: 100%;
+	/* 1/4 */
+	width: 25%;
+	/* border: 1px solid red; */
+	/* perfectly center */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.filter_color {
+	height: 40%;
+	width: 40%;
+	/* border: 1px solid red; */
+	border-radius: 0.1rem;
+}
+.pink {
 	background-color: pink;
-	margin: 15px 0 15px 15px;
 }
-.c2 {
-	display: flex;
-	justify-content: flex-start;
-	height: 30px;
-	width: 30px;
-	background-color: lightskyblue;
-	margin: 15px 0 15px 15px;
+.blue {
+	background-color: blue;
 }
-.c3 {
-	display: flex;
-	justify-content: flex-start;
-	height: 30px;
-	width: 30px;
-	background-color: lightgreen;
-	margin: 15px 0 15px 15px;
+.green {
+	background-color: green;
 }
-.c4 {
+.black {
+	background-color: rgb(26, 23, 23);
+}
+.action-container {
+	height: 60%;
+	/* border: 1px solid red; */
+	width: 8rem;
+	background-color: #6d7c7e;
+	border-radius: 0.2rem;
 	display: flex;
-	justify-content: flex-start;
-	height: 30px;
-	width: 30px;
-	background-color: black;
-	margin: 15px 15px 15px 15px;
+	border-radius: 0.2rem solid;
+}
+.icon-container {
+	width: 50%;
+	/* border: 1px solid red; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+/* icons -> text */
+.fas {
+	font-size: 1.5rem;
 }
 
-.icons {
-	display: flex;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-left: 30vw;
-    font-size: 2rem;
-}
-
-.plus{
-    margin-right: 1rem;
+.main-container{
+	height: 88vh;
 }
