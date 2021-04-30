@@ -43,10 +43,10 @@ body {
 	background-color: pink;
 }
 .blue {
-	background-color: blue;
+	background-color: rgb(18, 89, 182);
 }
 .green {
-	background-color: green;
+	background-color: rgb(25, 150, 25);
 }
 .black {
 	background-color: rgb(26, 23, 23);
@@ -82,6 +82,7 @@ body {
 	top: 30vh;
 	display: flex;
 	box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.698);
+	outline: 0px solid transparent;
 }
 .input_container {
 	height: 100%;

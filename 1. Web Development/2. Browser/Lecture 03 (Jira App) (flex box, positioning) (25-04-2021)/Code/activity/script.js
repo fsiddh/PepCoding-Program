@@ -75,19 +75,22 @@ function createTask(color, task) {
     </div>`;
 	mainContainer.appendChild(taskContainer);
 
-	let task_filter = document.querySelector(".task_filter");
 	let colorsArr = [];
 	for (let i = 0; i < colorBtn.length; i++) {
 		colorsArr.push(colorBtn[i].classList[1]);
 	}
 
-	console.log(colorsArr);
+	// console.log(colorsArr);
 
-	task_filter.addEventListener("click", function () {
-		let i = 0;
-		if (color != colorsArr[i]) {
-			task_filter.setAttribute("class", `task_filter ${colorsArr[i%colorsArr.length]}`);
-		}
-		i++;
-	});
+	// Adding task filter color/priority change feature
+	let task_filter = document.querySelectorAll(".task_filter");
+	for (let i = 0; i < task_filter.length; i++) {
+		// console.log("task filter")
+		let k = 0;
+		task_filter[i].addEventListener("click", function () {
+			// console.log("task filter clicked");
+			task_filter[i].setAttribute("class", `task_filter ${colorsArr[k]}`);
+			k = (k + 1) % colorsArr.length;
+		});
+	}
 }
