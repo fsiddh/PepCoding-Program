@@ -1,0 +1,158 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin:0px;
+    font-family: "Raleway", sans-serif;
+    background-color: #ecf0f1;
+
+}
+
+.toolbar{
+    height: 12vh;
+    background-color: #2d3436;
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+}
+.filter-container{
+    height: 60%;
+    /* border: 1px solid red; */
+    width: 14rem;
+    margin-right: 4rem;
+    border-radius: 0.2rem;
+    background-color: #6d7c7e;
+    display: flex;
+}
+.filter{
+    height: 100%;
+    /* 1/4 */
+    width:25%;
+    /* border: 1px solid red; */
+    /* perfectly center */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.filter_color{
+    height: 40%;
+    width:40%;
+    /* border: 1px solid red; */
+    border-radius: 0.1rem;
+}
+.pink{
+background-color: pink;
+}
+.blue{
+background-color: blue;
+}
+.green{
+background-color: green;
+}
+.black{
+    background-color: rgb(26, 23, 23);
+}
+.action-container{
+    height: 60%;
+    /* border: 1px solid red; */
+    width: 8rem;
+    background-color: #6d7c7e;
+    border-radius: 0.2rem;
+    display: flex;
+    border-radius: 0.2rem solid;
+}
+.icon-container{
+    width:50%;
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* icons -> text */
+.fas{
+    font-size: 1.5rem;
+}
+.active{
+    background-color: #474a4b;
+}
+/* modal css */
+.modal_container{
+    position: absolute;
+height:18rem;
+width:36rem;
+background-color: brown;
+/* variable value */
+left: calc((100vw - 36rem)/2);
+top:30vh;
+display: flex;
+box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.698);
+}
+.input_container{
+    height: 100%;
+    width:73%;
+}
+.modal_input{
+    height: 100%;
+    width:100%;
+    outline:none;
+    padding: 2rem 3rem;
+    font-family: "Raleway", sans-serif;
+    font-size: 1.5rem;
+    /*  line between space */
+    line-height: 145%;
+    font-weight: 400;
+
+}
+.modal_filter_container{
+ width:27%;
+ background-color: #444;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+/* gap:2rem; */
+align-items: center;
+padding: 1.7rem 1.2rem;
+}
+.modal_filter_container>.filter{
+   height: 15%; 
+   width:60%
+}
+.border{
+    border: 0.2rem solid white;
+}
+
+
+/* task css */
+.main_container{
+   height:88vh;
+   overflow: auto;
+    padding-top: 2rem;
+    padding-left: 3rem;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.task_filter{
+    height: 7%;
+}
+.task_container{
+    height: 10rem;
+    width:16rem;
+    background-color: #fff;
+}
+.task_desc_container{
+    height: 80%;
+    padding-left:0.5rem;
+}
+.task_desc{
+    height: 70%;
+    overflow:auto;
+    text-align: center;
+    /* words */
+    word-break: break-all;
+    
+}
+.uid{
+    color: #444;
+    margin-bottom: 0.1rem;;
+}
