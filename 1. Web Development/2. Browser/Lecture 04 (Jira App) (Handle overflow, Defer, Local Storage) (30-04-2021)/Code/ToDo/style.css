@@ -1,0 +1,38 @@
+body {
+	background-color: rgb(30, 9, 104);
+	margin: 0;
+}
+
+.input_container {
+	padding: 1rem;
+	height: 10vh;
+	margin-left: 30vw;
+    align-self: center;
+}
+
+.input_box {
+    height: 80%;
+    font-family: 'Architects Daughter', cursive;
+    font-size: 2rem;
+}
+
+.tasks_container {
+	margin-left: 10vw;
+    text-align: center;
+}
+
+.tasks {
+	list-style: none;
+	margin: 1rem;
+	background-color: lightcyan;
+	max-width: 60%;
+    font-family: 'Architects Daughter', cursive;
+    font-size: 1.5rem;
+}
+
+.info{
+    font-family: 'Architects Daughter', cursive;
+    font-style: white;
+    color: white;
+    margin-left: 15.7vw;
+}
