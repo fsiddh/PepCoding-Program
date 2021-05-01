@@ -17,9 +17,9 @@ if (localStorage.getItem("allTask")) {
 	for (let i = 0; i < taskArr.length; i++) {
 		let { id, color, task } = taskArr[i];
 
-		// Sending "false" so that naya taskArr na ban jaye
-        // As we have data of tasks from old Session, we'll continue adding current sessions
-        // tasks in old data only!
+		// Sending "false" so that pehele sare purane tasks
+		// pr sare event listners lag jaye (delete krne ka, desc update krne ka, color change krne ka etc).
+		// Fir jab "true" hoga It'll mean naya taskBox bana hai, now store it in local storage and add eventListners n all!
 		createTask(color, task, false, id);
 	}
 }
@@ -27,7 +27,7 @@ if (localStorage.getItem("allTask")) {
 // Click plus btn to create a new Task
 plusButton.addEventListener("click", createModal);
 
-// Click cross btn to delete a Task
+// cross btn is pressed and unpressed
 crossBtn.addEventListener("click", setDeleteState);
 
 // creates Modal Container
@@ -95,7 +95,9 @@ function handleModal(modal_container) {
 			//  remove modal
 			modal_container.remove();
 
-			// create taskBox
+			// create taskBox 
+			// Here "true" means abhi naya textBox bana hai -> store its info in local storage
+			// then add all eventListners n all.
 			createTask(cColor, textArea.value, true);
 		}
 	});
@@ -118,7 +120,7 @@ function createTask(color, task, flag, id) {
     </div>`;
 	mainContainer.appendChild(taskContainer);
 
-	// If you don't have data from previous sessoion -> Store/Set current Session's data
+	// Store/Set current Session's textBox info in local storage
 	if (flag == true) {
 		let obj = {
 			task: task,
@@ -138,7 +140,7 @@ function createTask(color, task, flag, id) {
     // Adding eventListner of getting deleted(if crossBtn is pressed) on every taskBox
     taskContainer.addEventListener("click", deleteTask);
     
-    // Adding eventListner for editing task on every taskBox
+    // Adding eventListner for editing taskDesc on every taskBox
 	let taskDesc = taskContainer.querySelector(".task_desc");
 	taskDesc.addEventListener("keypress", editTask);
 }
@@ -155,6 +157,8 @@ function changeColor(e) {
 	taskFilter.classList.add(colors[newColorIdx]);
 }
 
+// add and removes "active" class from crossBtn
+// active == pressed && unactive == unpressed
 function setDeleteState(e) {
 	let crossBtn = e.currentTarget;
 	if (deleteState == false) {
@@ -162,22 +166,32 @@ function setDeleteState(e) {
 	} else {
 		crossBtn.classList.remove("active");
 	}
+
+	// Jo bhi state hai uska ulta ho jaega(toggle)
 	deleteState = !deleteState;
 }
 
 function deleteTask(e) {
 	let taskContainer = e.currentTarget;
+
+	// If crossBtn is pressed -> delt taskBox/taskContainer which is clicked
 	if (deleteState) {
-		// local storage search -> remove
+		// Get unique ID of taskBox which is clicked
 		let uidElem = taskContainer.querySelector(".uid");
 		let uid = uidElem.innerText.split("#")[1];
+
+		// Amongst all the taskBoxes find the taskBox whose id matches uid 
 		for (let i = 0; i < taskArr.length; i++) {
 			let { id } = taskArr[i];
-			console.log(id, uid);
-			if (id == uid) {
-				taskArr.splice(i, 1);
-				let finalTaskArr = JSON.stringify(taskArr);
-				localStorage.setItem("allTask", finalTaskArr);
+			if (uid == id) {
+				// Remove task at "taskArr[i]"
+				taskArr.splice(i, 1); // This means remove 1 element at index i
+
+				// set/store new taskArr(taskArr without "taskArr[i]") by updating taskArr in local storage
+				let newTaskArr = JSON.stringify(taskArr);
+				localStorage.setItem("allTask", newTaskArr);
+
+				// remove taskBox(of "taskArr[i]")
 				taskContainer.remove();
 				break;
 			}
@@ -187,15 +201,20 @@ function deleteTask(e) {
 
 function editTask(e) {
 	let taskDesc = e.currentTarget;
+
+	// Get uid of textDesc which is clicked
 	let uidElem = taskDesc.parentNode.children[0];
 	let uid = uidElem.innerText.split("#")[1];
+
+	// For uid -> update "taskArr[i].task" by updated desc in local storage
 	for (let i = 0; i < taskArr.length; i++) {
 		let { id } = taskArr[i];
-		console.log(id, uid);
-		if (id == uid) {
-			taskArr[i].task = taskDesc.innerText;
-			let finalTaskArr = JSON.stringify(taskArr);
-			localStorage.setItem("allTask", finalTaskArr);
+		
+		if (uid == id) {
+			taskArr[i].task = taskDesc.innerText; // local storage me task ke andr purana desc. ko update by naya desc .
+
+			let newTaskArr = JSON.stringify(taskArr);
+			localStorage.setItem("allTask", newTaskArr);
 
 			break;
 		}
