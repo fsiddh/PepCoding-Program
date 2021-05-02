@@ -34,12 +34,16 @@ function handleActiveSheet(e) {
 }
 
 // Grid Container JS
+
+// Adding all alphabets in each Top Coloumn
 let topRow = document.querySelector(".top-row");
 let str = "";
 for (let i = 0; i < 26; i++) {
 	str += `<div class='col'>${String.fromCharCode(65 + i)}</div>`;
 }
 topRow.innerHTML = str;
+
+// Adding no.s from 1-100 in leftmost column
 let leftCol = document.querySelector(".left-col");
 str = "";
 for (let i = 0; i < 100; i++) {
@@ -47,7 +51,7 @@ for (let i = 0; i < 100; i++) {
 }
 leftCol.innerHTML = str;
 
-// 2d array
+// 2d array -> Generating our grid
 let grid = document.querySelector(".grid");
 str = "";
 for (let i = 0; i < 100; i++) {
