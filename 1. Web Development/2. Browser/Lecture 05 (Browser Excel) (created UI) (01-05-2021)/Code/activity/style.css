@@ -1,58 +1,106 @@
-*{
-    box-sizing: border-box;
+* {
+	box-sizing: border-box;
 }
 
-body{
-    margin: 0;
+body {
+	margin: 0;
 }
 
-.menu-container{
-    background-color: lightblue;
-    height: 80px;
+/* Main Skeleton */
+.menu-container {
+	background-color: lightblue;
+	height: 80px;
 }
 
-.formula-container{
-    background-color:darkgray;
-    height: 30px;
+.formula-container {
+	background-color: darkgray;
+	height: 30px;
 }
 
-.grid{
-    height: calc(100vh - (80px + 30px + 40px));
+.sheets {
+	background-color: lightgrey;
+	height: 40px;
+	display: flex;
 }
 
-.sheets{
-    background-color: lightgrey;
-    height: 40px;
-    display: flex;
+.add-sheet_container {
+	height: 100%;
+	width: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.add-sheet_container{
-    height: 100%;
-    width: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.icon {
+	font-size: 1.2rem;
+	color: black;
 }
 
-.icon{
-    font-size: 1.2rem;
-    color: black;
+.sheets-list {
+	display: flex;
+	height: 100%;
 }
 
-.sheets-list{
-    display: flex;
-    height: 100%;
+.sheet {
+	width: 60px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid white;
 }
 
-.sheet{
-    width: 60px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid white;
+.active-sheet {
+	background-color: white;
 }
 
-.active-sheet{
-    background-color: white;
+/* Grid Container */
+.top-left-block {
+	height: 30px;
+	width: 25px;
+	background-color: gray;
+}
+
+.top-row {
+	height: 30px;
+	background-color: lightgreen;
+	display: flex;
+	position: absolute;
+	top: 0px;
+	left: 25px;
+}
+
+.grid_container {
+	position: relative;
+	height: calc(100vh - (80px + 30px + 40px));
+	overflow: auto;
+}
+.row {
+	display: flex;
+}
+.col {
+	min-width: 80px;
+	border: 1px solid;
+	min-height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.left-col {
+	width: 25px;
+	border: 1px solid red;
+}
+
+.grid {
+	position: absolute;
+	top: 30px;
+	left: 25px;
+}
+
+.left-col_box {
+	height: 30px;
+	background-color: lightgreen;
+	text-align: center;
+	border: 1px solid;
 }
