@@ -77,39 +77,44 @@ body {
 	left: 25px;
 }
 
-.grid_container {
-	position: relative;
-	height: calc(100vh - (80px + 30px + 40px));
-	overflow: auto;
-}
+/* .grid_container {
+    position: relative;
+    border:5px solid red
+} */
 .row {
 	display: flex;
 }
+
 .col {
 	min-width: 80px;
+	max-width: 80px;
 	border: 1px solid;
 	min-height: 30px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	text-align: center;
+	/* display: flex;
+    justify-content: center;
+    align-items: center; */
 }
 
 .left-col {
 	width: 25px;
-	/* border: 1px solid red; */
 }
-
-.grid {
-	position: absolute;
-	top: 30px;
-	left: 25px;
-}
-
 .left-col_box {
 	height: 30px;
 	background-color: lightgreen;
 	text-align: center;
 	border: 1px solid;
+}
+
+.grid_container {
+	height: calc(100vh - (80px + 30px + 40px));
+	overflow: auto;
+	position: relative;
+}
+.grid {
+	position: absolute;
+	top: 30px;
+	left: 25px;
 }
 /* ==================== GRID CSS ENDS =====================*/
 

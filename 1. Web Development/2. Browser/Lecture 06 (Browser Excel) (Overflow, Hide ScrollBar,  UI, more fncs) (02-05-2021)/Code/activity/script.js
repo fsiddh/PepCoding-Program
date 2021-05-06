@@ -3,8 +3,31 @@ let sheetList = document.querySelector(".sheets-list");
 let allCells = document.querySelectorAll(".grid .col");
 let addressBar = document.querySelector(".address-box");
 
+let fontSizeElem = document.querySelector(".font-size");
+let leftBtn = document.querySelector(".left");
+let centerBtn = document.querySelector(".center");
+let rightBtn = document.querySelector(".right");
+
 let firstSheet = document.querySelector(".sheet");
 firstSheet.addEventListener("click", handleActiveSheet); // We didn't added EventListener on First Sheet
+
+// Upon clicking any cell, it's address will show up on address bar
+for (let i = 0; i < allCells.length; i++) {
+	allCells[i].addEventListener("click", function handleCell() {
+		let rid = Number(allCells[i].getAttribute("rid"));
+		let cid = Number(allCells[i].getAttribute("cid"));
+
+		let rowAdd = rid + 1;
+		let colAdd = String.fromCharCode(cid + 65);
+
+		let address = colAdd + rowAdd;
+
+		addressBar.value = address;
+	});
+}
+
+// Bydefault Page render -> first cell's address -> shows on Address Bar
+allCells[0].click();
 
 // Add click krne se New Sheet aa jaye
 addBtnContainer.addEventListener("click", function () {
@@ -24,6 +47,28 @@ addBtnContainer.addEventListener("click", function () {
 	newSheet.addEventListener("click", handleActiveSheet); // add Event Listner for Every newSheet
 });
 
+// Font Size
+fontSizeElem.addEventListener("change", function () {
+	let fontSize = fontSizeElem.value;
+
+	let cellAddress = addressBar.value;
+	let { rid, cid } = getRIdCIdfromAddress(cellAddress);
+
+	let cellElem = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+	cellElem.style.fontSize = fontSize + "px";
+});
+
+//Alignment Functions
+// left align
+leftBtn.addEventListener("click", handleAlign);
+
+// center align
+centerBtn.addEventListener("click", handleAlign);
+
+// right align
+rightBtn.addEventListener("click", handleAlign);
+
+// On clicking a sheet it gets selected/active
 function handleActiveSheet(e) {
 	let mySheet = e.currentTarget;
 	let sheetsArr = document.querySelectorAll(".sheet");
@@ -35,20 +80,30 @@ function handleActiveSheet(e) {
 	}
 }
 
-// Upon clicking any cell, it's address will show up on address bar
-for (let i = 0; i < allCells.length; i++) {
-	allCells[i].addEventListener("click", function handleCell() {
-		let rid = Number(allCells[i].getAttribute("rid"));
-		let cid = Number(allCells[i].getAttribute("cid"));
+// Handles Alignment when LCR is pressed
+function handleAlign(e) {
+	let myAlignBtn = e.currentTarget; // <input class="left" type="button" value="L">
+	let alignName = myAlignBtn.classList[0]; // "left"
 
-		let rowAdd = rid + 1;
-		let colAdd = String.fromCharCode(cid + 65);
+	// Gets address displayed in the address Bar
+	let address = addressBar.value;
 
-		let address = colAdd + rowAdd;
-		
-		addressBar.value = address;
-	})
+	let { rid, cid } = getRIdCIdfromAddress(address);
+
+	// Selects the clicked cell and asigns the resp. alignment to it
+	let cellElem = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+	cellElem.style.textAlign = alignName;
+
+	// console.log(alignName, rid, cid, cellElem.style.textAlign);
 }
 
-// Bydefault Page render -> first cell's address -> shows on Address Bar
-allCells[0].click();
+function getRIdCIdfromAddress(address) {
+	//ex. address = A1
+	let cellColAdrs = address[0].charCodeAt(); // "A" -> 65
+	let cellRowAdrs = Number(address[1]); // "1" -> 1
+
+	let cid = cellColAdrs - 65; // "- 65" -> to get the col no.
+	let rid = cellRowAdrs - 1; // "-1" karre bcz apne UI ke liye "+1" krke dala tha
+
+	return { rid, cid };
+}
