@@ -3,6 +3,7 @@ let sheetList = document.querySelector(".sheets-list");
 let allCells = document.querySelectorAll(".grid .col");
 let addressBar = document.querySelector(".address-box");
 
+let fontFamilyElem = document.querySelector(".font-family");
 let boldBtn = document.querySelector(".bold");
 let underlineBtn = document.querySelector(".underline");
 let italicBtn = document.querySelector(".italic");
@@ -69,6 +70,9 @@ centerBtn.addEventListener("click", handleAlign);
 // right align
 rightBtn.addEventListener("click", handleAlign);
 
+// Font-Family
+fontFamilyElem.addEventListener("change", handleFontFamily);
+
 // BUI
 // Bold
 boldBtn.addEventListener("click", handleBUI);
@@ -125,6 +129,19 @@ function handleBUI(e) {
 	} else {
 		cellElem.style.fontStyle = myBtnStyleName;
 	}
+}
+
+// Handles font family of selected cell
+function handleFontFamily(e) {
+	let font = e.currentTarget.value;
+
+	let address = addressBar.value;
+	let { rid, cid } = getRIdCIdfromAddress(address);
+	let cellElem = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+
+	cellElem.style.fontFamily = font;
+
+	console.log(font);
 }
 
 // Given address(ex="A1") -> returns its rid(0) and cid(0)
