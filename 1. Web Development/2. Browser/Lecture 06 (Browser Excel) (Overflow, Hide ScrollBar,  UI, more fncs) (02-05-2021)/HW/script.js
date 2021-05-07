@@ -5,7 +5,7 @@ let addressBar = document.querySelector(".address-box");
 
 let boldBtn = document.querySelector(".bold");
 let underlineBtn = document.querySelector(".underline");
-let italicsBtn = document.querySelector(".italic");
+let italicBtn = document.querySelector(".italic");
 let fontSizeElem = document.querySelector(".font-size");
 let leftBtn = document.querySelector(".left");
 let centerBtn = document.querySelector(".center");
@@ -64,19 +64,18 @@ fontSizeElem.addEventListener("change", function () {
 //Alignment Functions
 // left align
 leftBtn.addEventListener("click", handleAlign);
-
 // center align
 centerBtn.addEventListener("click", handleAlign);
-
 // right align
 rightBtn.addEventListener("click", handleAlign);
 
 // BUI
 // Bold
-
-
+boldBtn.addEventListener("click", handleBUI);
 // Underline
+underlineBtn.addEventListener("click", handleBUI);
 // Italic
+italicBtn.addEventListener("click", handleBUI);
 
 // All Re-Usable Functions (fns which are used above)
 
@@ -109,6 +108,26 @@ function handleAlign(e) {
 	// console.log(alignName, rid, cid, cellElem.style.textAlign);
 }
 
+// Handles Bold, Underline and Italic styles of a cell
+function handleBUI(e) {
+	let myBtn = e.currentTarget;
+	let myBtnStyleName = myBtn.classList[0];
+
+	let address = addressBar.value;
+	let { rid, cid } = getRIdCIdfromAddress(address);
+
+	let cellElem = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+
+	if (myBtnStyleName == "bold") {
+		cellElem.style.fontWeight = myBtnStyleName;
+	} else if (myBtnStyleName == "underline") {
+		cellElem.style.textDecoration = myBtnStyleName;
+	} else {
+		cellElem.style.fontStyle = myBtnStyleName;
+	}
+}
+
+// Given address(ex="A1") -> returns its rid(0) and cid(0)
 function getRIdCIdfromAddress(address) {
 	//ex. address = A1
 	let cellColAdrs = address[0].charCodeAt(); // "A" -> 65
