@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			.container {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;
+				padding-top: 5rem;
+			}
+
+			.red {
+				background-color: red;
+			}
+
+			.card {
+				border: 1px solid;
+				height: 10rem;
+				width: 10rem;
+				margin: 2rem;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="card"></div>
+			<div class="card"></div>
+			<div class="card"></div>
+			<div class="card"></div>
+			<div class="card"></div>
+			<div class="card red"></div>
+			<div class="card"></div>
+			<div class="card"></div>
+			<div class="card"></div>
+			<div class="card"></div>
+		</div>
+		<script>
+			//  Q Create a generic function to select all sibling of a given node. Using that function delete all siblings of red card.
+
+			// Solution
+			let allCards = document.querySelectorAll(".card");
+			function siblingSelector() {
+				let sibArr = [];
+				allCards.forEach(function (card) {
+					if (card.classList[1] == undefined) {
+						sibArr.push(card);
+					}
+				});
+				return sibArr;
+			}
+
+			let sibArr = siblingSelector();
+
+			sibArr.forEach(function (sib) {
+				sib.remove();
+				// sib.style.display = "none";
+			});
+		</script>
+	</body>
+</html>
