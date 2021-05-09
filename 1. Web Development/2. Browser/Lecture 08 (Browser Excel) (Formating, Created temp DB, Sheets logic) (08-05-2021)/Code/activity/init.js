@@ -27,27 +27,3 @@ for (let i = 0; i < 100; i++) {
 	str += "</div>";
 }
 grid.innerHTML = str;
-
-// initial load
-// Creating Temporary DATABASE(to keep track of every cell)
-workSheetDb = []; // Stores data of every sheet
-function initCurrentSheetDb() {
-	let sheetDB = []; // Stores data of all cells present in the sheet
-	for (let i = 0; i < 100; i++) {
-		let row = [];
-		for (let j = 0; j < 26; j++) {
-			let cell = {
-				bold: false,
-				italic: "noraml",
-				underline: "none",
-				fontFamily: "Arial",
-				fontSize: "16",
-				halign: "left",
-			};
-			row.push(cell);
-		}
-		sheetDB.push(row);
-	}
-	workSheetDb.push(sheetDB);
-}
-initCurrentSheetDb();
