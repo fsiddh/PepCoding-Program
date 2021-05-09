@@ -90,6 +90,7 @@ body {
 	max-width: 80px;
 	border: 1px solid;
 	min-height: 30px;
+	word-break: break-all; /* Breaks the word, to shift into multiple lines*/
 	/* display: flex;
     justify-content: center;
     align-items: center; */
