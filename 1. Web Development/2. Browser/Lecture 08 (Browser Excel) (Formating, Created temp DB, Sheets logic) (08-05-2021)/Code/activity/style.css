@@ -90,7 +90,6 @@ body {
 	max-width: 80px;
 	border: 1px solid;
 	min-height: 30px;
-	text-align: center;
 	/* display: flex;
     justify-content: center;
     align-items: center; */
@@ -119,7 +118,7 @@ body {
 /* ==================== GRID CSS ENDS =====================*/
 
 /* ==================== Menu Container CSS Starts =====================*/
-.active-btn{
+.active-btn {
 	background-color: rgb(92, 92, 92);
 }
 
