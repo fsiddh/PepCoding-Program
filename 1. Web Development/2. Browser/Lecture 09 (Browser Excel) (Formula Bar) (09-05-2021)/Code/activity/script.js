@@ -35,6 +35,8 @@ addBtnContainer.addEventListener("click", function () {
 	let newSheet = document.createElement("div");
 	newSheet.setAttribute("class", "sheet");
 	newSheet.setAttribute("sheetIdx", idx + 1);
+	//style="cursor: pointer"
+	newSheet.setAttribute("style", "cursor: pointer"); 
 	newSheet.innerText = `Sheet ${idx + 1}`;
 
 	// Add new Sheet in sheet list
