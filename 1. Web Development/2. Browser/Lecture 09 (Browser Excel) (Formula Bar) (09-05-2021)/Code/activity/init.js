@@ -45,6 +45,8 @@ function initCurrentSheetDb() {
 				fontSize: "16",
 				halign: "left",
 				value: "",
+				children: [],
+				formula: "",
 			};
 			row.push(cell);
 		}

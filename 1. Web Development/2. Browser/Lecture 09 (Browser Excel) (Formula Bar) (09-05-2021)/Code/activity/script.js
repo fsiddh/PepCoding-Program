@@ -2,6 +2,7 @@ let addBtnContainer = document.querySelector(".add-sheet_container");
 let sheetList = document.querySelector(".sheets-list");
 let allCells = document.querySelectorAll(".grid .col");
 let addressBar = document.querySelector(".address-box");
+let formulaBarInput = document.querySelector(".formula-box");
 
 let fontFamilyElem = document.querySelector(".font-family");
 let fontSizeElem = document.querySelector(".font-size");
@@ -19,11 +20,68 @@ let allAlignBtns = document.querySelectorAll(".alignment-container>*");
 let sheetDB = workSheetDb[0]; // initally ek db rhega prog start hote hee
 initUI(); // initially assign default formatting to every cell of sheet1
 
+// Add click krne se New Sheet aa jaye
+// Click "+" =>
+// a.add new sheet
+// b.create a new db for this sheet
+// c.set eventListener on each sheet("active")
+addBtnContainer.addEventListener("click", function () {
+	let sheetsArr = document.querySelectorAll(".sheet");
+	let lastSheetElem = sheetsArr[sheetsArr.length - 1];
+	let idx = lastSheetElem.getAttribute("sheetIdx");
+
+	idx = Number(idx); // "1" -> 1
+
+	let newSheet = document.createElement("div");
+	newSheet.setAttribute("class", "sheet");
+	newSheet.setAttribute("sheetIdx", idx + 1);
+	newSheet.innerText = `Sheet ${idx + 1}`;
+
+	// Add new Sheet in sheet list
+	sheetList.appendChild(newSheet); // Append current Sheet in old Sheets list
+
+	// Create new DB for newSheet
+	initCurrentSheetDb();
+
+	// add Event Listner for Every newSheet
+	newSheet.addEventListener("click", handleActiveSheet);
+});
+
 let firstSheet = document.querySelector(".sheet");
 firstSheet.addEventListener("click", handleActiveSheet); // We didn't added EventListener on First Sheet
 
-// click cell => 1.address box = clicked cell address ("A1")
-//            => 2. restore formating of resp cell
+// On clicking a sheet it gets selected/active
+// Click Sheet:
+// a.set selected sheet "active-sheet"
+// b.empty the sheet
+// c.restore data on UI from db of the active sheet
+// d.click first cell of the active sheet
+function handleActiveSheet(e) {
+	// a.
+	let mySheet = e.currentTarget;
+	let sheetsArr = document.querySelectorAll(".sheet");
+	sheetsArr.forEach(function (sheet) {
+		sheet.classList.remove("active-sheet");
+	});
+	if (!mySheet.classList[1]) {
+		mySheet.classList.add("active-sheet");
+	}
+
+	// b.
+	initUI();
+
+	//c.
+	let activeSheetDBIdx = mySheet.getAttribute("sheetIdx") - 1; // "-1" -> as for UI we added "1".
+	sheetDB = workSheetDb[activeSheetDBIdx];
+	setUI(sheetDB);
+
+	//d.
+	allCells[0].click();
+}
+
+// On Clicking a cell:
+// => 1. address box = clicked cell's address ("A1") gets displayed in it
+// => 2. restore formating of resp cell
 for (let i = 0; i < allCells.length; i++) {
 	allCells[i].addEventListener("click", function handleCell() {
 		let rid = Number(allCells[i].getAttribute("rid"));
@@ -31,9 +89,7 @@ for (let i = 0; i < allCells.length; i++) {
 
 		let rowAdd = rid + 1;
 		let colAdd = String.fromCharCode(cid + 65);
-
 		let address = colAdd + rowAdd;
-
 		addressBar.value = address;
 
 		// Acc. to cell's prev state, update all Btns state
@@ -84,6 +140,9 @@ for (let i = 0; i < allCells.length; i++) {
 		// Font-Size
 		let cellSize = cellObject.fontSize;
 		fontSizeElem.value = cellSize;
+
+		// Formula Bar
+		formulaBarInput.value = cellObject.formula;
 	});
 }
 
@@ -91,45 +150,12 @@ for (let i = 0; i < allCells.length; i++) {
 allCells[0].click();
 
 // ====MENU BAR FUNCTIONS======================================================================================================
-// Add click krne se New Sheet aa jaye
-// click "+" =>
-// 1.a.add new sheet + b.create a new db for this sheet + c.set eventListener on each sheet("active")
-addBtnContainer.addEventListener("click", function () {
-	let sheetsArr = document.querySelectorAll(".sheet");
-	let lastSheetElem = sheetsArr[sheetsArr.length - 1];
-	let idx = lastSheetElem.getAttribute("sheetIdx");
-
-	idx = Number(idx);
-
-	let newSheet = document.createElement("div");
-	newSheet.setAttribute("class", "sheet");
-	newSheet.setAttribute("sheetIdx", idx + 1);
-	newSheet.innerText = `Sheet ${idx + 1}`;
-
-	// Add new Sheet in sheet list
-	sheetList.appendChild(newSheet); // Append current Sheet in old Sheets list
-
-	// Create new DB for this sheet
-	initCurrentSheetDb();
-
-	// add Event Listner for Every newSheet
-	newSheet.addEventListener("click", handleActiveSheet);
-});
 
 // Font Size
-fontSizeElem.addEventListener("change", function () {
-	let fontSize = fontSizeElem.value;
+fontSizeElem.addEventListener("change", handleFontSize);
 
-	let cellAddress = addressBar.value;
-	let { rid, cid } = getRIdCIdfromAddress(cellAddress);
-
-	let cellElem = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
-	cellElem.style.fontSize = fontSize + "px";
-
-	// Updating our temporary DB
-	let cellObject = sheetDB[rid][cid];
-	cellObject.fontSize = fontSize;
-});
+// Font-Family
+fontFamilyElem.addEventListener("change", handleFontFamily);
 
 //Alignment Functions
 // left align
@@ -138,9 +164,6 @@ leftBtn.addEventListener("click", handleAlign);
 centerBtn.addEventListener("click", handleAlign);
 // right align
 rightBtn.addEventListener("click", handleAlign);
-
-// Font-Family
-fontFamilyElem.addEventListener("change", handleFontFamily);
 
 // BUI
 // Bold
@@ -152,32 +175,6 @@ italicBtn.addEventListener("click", handleBUI);
 
 // ====HELPING FUNCTIONS======================================================================================================
 // All Re-Usable Functions (fns which are used above)
-
-// On clicking a sheet it gets selected/active
-// click sheet =>
-// a.set sheetDb to current active sheet + b. empty the sheet + c.restore data on UI from db + d. click first cell
-function handleActiveSheet(e) {
-	// a.
-	let mySheet = e.currentTarget;
-	let sheetsArr = document.querySelectorAll(".sheet");
-	sheetsArr.forEach(function (sheet) {
-		sheet.classList.remove("active-sheet");
-	});
-	if (!mySheet.classList[1]) {
-		mySheet.classList.add("active-sheet");
-	}
-
-	// b. + Click first cell
-	initUI();
-
-	//c.
-	let activeSheetDBIdx = mySheet.getAttribute("sheetIdx") - 1; // "-1" -> as for UI we added "1".
-	sheetDB = workSheetDb[activeSheetDBIdx];
-	setUI(sheetDB);
-
-	//d.
-	allCells[0].click();
-}
 
 // sets initial styles on empty page
 function initUI() {
@@ -191,8 +188,8 @@ function initUI() {
 		allCells[i].innerText = "";
 		// save text to temp DB (blur event -> detects when element is out of focus)
 		allCells[i].addEventListener("blur", function handleCell() {
-			let rid = allCells[i].getAttribute("rid");
-			let cid = allCells[i].getAttribute("cid");
+			let rid = Number(allCells[i].getAttribute("rid"));
+			let cid = Number(allCells[i].getAttribute("cid"));
 			let cellObj = sheetDB[rid][cid];
 			cellObj.value = allCells[i].innerText;
 		});
@@ -205,14 +202,21 @@ function setUI(sheetDB) {
 		for (let j = 0; j < sheetDB[i].length; j++) {
 			let cellData = sheetDB[i][j];
 			let cell = document.querySelector(`.col[rid="${i}"][cid="${j}"]`);
+
 			cell.style.fontWeight = cellData.bold == true ? "bold" : "normal";
+
 			cell.style.fontStyle =
 				cellData.italic == true ? "italic" : "normal";
+
 			cell.style.textDecoration =
 				cellData.underline == true ? "underline" : "none";
+
 			cell.style.fontFamily = cellData.fontFamily;
+
 			cell.style.fontSize = cellData.fontSize + "px";
+
 			cell.style.textAlign = cellData.halign;
+
 			cell.innerText = cellData.value;
 		}
 	}
@@ -225,7 +229,7 @@ function handleAlign(e) {
 
 	// Gets address displayed in the address Bar
 	let address = addressBar.value;
-
+	console.log(address);
 	let { rid, cid } = getRIdCIdfromAddress(address);
 
 	// Selects the clicked cell and asigns the resp. alignment to it
@@ -237,8 +241,6 @@ function handleAlign(e) {
 	for (let i = 0; i < allAlignBtns.length; i++) {
 		allAlignBtns[i].classList.remove("active-btn");
 	}
-
-	// Add active btn class to selected alignment btn
 	myAlignBtn.classList.add("active-btn");
 
 	// Updating our temporary DB
@@ -248,8 +250,8 @@ function handleAlign(e) {
 
 // Handles Bold, Underline and Italic styles of a cell
 function handleBUI(e) {
-	let myBtn = e.currentTarget;
-	let myBtnStyleName = myBtn.classList[0];
+	let myBtn = e.currentTarget; // <input class="bold" type="button" value="B"></input>
+	let myBtnStyleName = myBtn.classList[0]; // "bold"
 
 	let address = addressBar.value;
 	let { rid, cid } = getRIdCIdfromAddress(address);
@@ -305,10 +307,25 @@ function handleFontFamily(e) {
 	cellObject.fontFamily = font;
 }
 
+// Handles font Size of selected cell
+function handleFontSize(e) {
+	let fontSize = e.currentTarget.value;
+
+	let cellAddress = addressBar.value;
+	let { rid, cid } = getRIdCIdfromAddress(cellAddress);
+
+	let cellElem = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+	cellElem.style.fontSize = fontSize + "px";
+
+	// Updating our temporary DB
+	let cellObject = sheetDB[rid][cid];
+	cellObject.fontSize = fontSize;
+}
+
 // Given address(ex="A1") -> returns its rid(0) and cid(0)
 function getRIdCIdfromAddress(address) {
 	//ex. address = A1
-	let cellColAdrs = address[0].charCodeAt(); // "A" -> 65
+	let cellColAdrs = address.charCodeAt(0); // "A" -> 65
 	let cellRowAdrs = Number(address[1]); // "1" -> 1
 
 	let cid = cellColAdrs - 65; // "- 65" -> to get the col no.
