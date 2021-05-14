@@ -188,13 +188,6 @@ function initUI() {
 		allCells[i].style.fontSize = "16px";
 		allCells[i].style.textAlign = "left";
 		allCells[i].innerText = "";
-		// save text to temp DB (blur event -> detects when element is out of focus)
-		allCells[i].addEventListener("blur", function handleCell() {
-			let rid = Number(allCells[i].getAttribute("rid"));
-			let cid = Number(allCells[i].getAttribute("cid"));
-			let cellObj = sheetDB[rid][cid];
-			cellObj.value = allCells[i].innerText;
-		});
 	}
 }
 
