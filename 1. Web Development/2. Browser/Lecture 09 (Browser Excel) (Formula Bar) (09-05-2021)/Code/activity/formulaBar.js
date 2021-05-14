@@ -9,16 +9,19 @@ for (let i = 0; i < allCells.length; i++) {
 		let address = addressBar.value;
 		let { rid, cid } = getRIdCIdfromAddress(address);
 		let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
-
+		
 		let cellObject = sheetDB[rid][cid];
+		
+		console.log(cellObject.value, cell.innerText);
 
 		if (cellObject.value == cell.innerText) {
 			return;
 		}
-
+		
 		if (cellObject.formula != "") {
 			removeFormula(cellObject, address);
 		}
+
 		cellObject.value = cell.innerText;
 
 		changeChildren(cellObject);
@@ -55,17 +58,17 @@ formulaBarInput.addEventListener("keydown", function (e) {
 // ====HELPING FUNCTIONS======================================================================================================
 
 function removeFormula(cellObject, address) {
-	let formula = cellObject.formula;
-	let formulaTokens = formula.split(" ");
+	let formula = cellObject.formula; // C1 = " A1 + B1 " 
+	let formulaTokens = formula.split(" "); // ["A1", "+", "B1",]
 	for (let i = 0; i < formulaTokens.length; i++) {
 		let firstCharofToken = formulaTokens[i].charCodeAt(0);
 		if (firstCharofToken >= 65 && firstCharofToken <= 90) {
-			let parentAddress = formulaTokens[i];
-			let parentRIdCId = getRIdCIdfromAddress(parentAddress);
+			let parentAddress = formulaTokens[i]; // A1
+			let parentRIdCId = getRIdCIdfromAddress(parentAddress); 
 			let parentCellObject = sheetDB[parentRIdCId.rid][parentRIdCId.cid];
 
 			let parentsChildren = parentCellObject.children;
-			let idxOfChildtoRemove = parentsChildren.indexOf(address);
+			let idxOfChildtoRemove = parentsChildren.indexOf(address); // address = "C1"
 			parentsChildren.splice(idxOfChildtoRemove, 1);
 		}
 	}
@@ -73,10 +76,10 @@ function removeFormula(cellObject, address) {
 }
 
 function changeChildren(cellObject) {
-	let children = cellObject.children;
+	let children = cellObject.children; // ["B1", "B2"]
 	console.log(children);
 	for (let i = 0; i < children.length; i++) {
-		let childAddress = children[i];
+		let childAddress = children[i]; // "C1"
 		let childRIdCId = getRIdCIdfromAddress(childAddress);
 		let childCellObject = sheetDB[childRIdCId.rid][childRIdCId.cid];
 		let childCellFormula = childCellObject.formula;
