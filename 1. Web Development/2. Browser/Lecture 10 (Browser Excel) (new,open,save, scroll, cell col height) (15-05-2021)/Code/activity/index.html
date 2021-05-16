@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Broswer Excel</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+		/>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="menu-container">
+			<div class="formatting-container">
+				<div class="subgroup">
+					<select id="font-family" class="font-family">
+						<option value="Arial">Arial</option>
+						<option value="Cambria">Cambria</option>
+						<option value="Georgia">Georgia</option>
+						<option value="Monospace">Monospace</option>
+						<option value="Sans-Serif">Sans-Serif</option>
+						<option value="Fantasy">Fantasy</option>
+					</select>
+					<div class="BUI_container">
+						<input type="button" value="B" class="bold " style="cursor: pointer"/>
+						<input type="button" value="U" class="underline" style="cursor: pointer"/>
+						<input type="button" value="I" class="italic" style="cursor: pointer"/>
+					</div>
+				</div>
+				<div class="subgroup">
+					<select id="font-size" class="font-size">
+						<option value="8">8</option>
+						<option value="10">10</option>
+						<option value="12">12</option>
+						<option value="16">16</option>
+						<option value="20">20</option>
+						<option value="32">32</option>
+					</select>
+					<div class="color-container">
+						<input type="color" id="color" style="cursor: pointer"/>
+						<input type="color" id="bg-color" style="cursor: pointer"/>
+					</div>
+				</div>
+			</div>
+			<div class="alignment-container">
+				<input type="button" value="L" class="left" style="cursor: pointer"/>
+				<input type="button" value="C" class="center" style="cursor: pointer"/>
+				<input type="button" value="R" class="right" style="cursor: pointer"/>
+			</div>
+			<div class="nos-container">
+				<i class="far fa-envelope-open open" style="cursor: pointer"></i>
+				<i class="fas fa-plus-circle new" style="cursor: pointer"></i>
+				<i class="fas fa-file-download download" style="cursor: pointer"></i>
+			</div>
+			
+		</div>
+		<div class="formula-container">
+			<input type="text" class="address-box" readonly />
+			<div class="seperator">:</div>
+			<input type="text" class="formula-box" />
+		</div>
+		<div class="grid_container">
+			<div class="top-left-block"></div>
+			<div class="top-row"></div>
+			<div class="left-col"></div>
+			<div class="grid"></div>
+		</div>
+		<div class="sheets">
+			<div class="add-sheet_container" style="cursor: pointer">
+				<i class="fas fa-plus-circle icon"></i>
+			</div>
+
+			<div class="sheets-list">
+				<div class="sheet active-sheet" sheetIdx="1" style="cursor: pointer">Sheet 1</div>
+			</div>
+		</div>
+
+		<script src="./init.js"></script>
+		<script src="./script.js"></script>
+		<script src="./formulaBar.js"></script>
+		<script src="./new_open_save.js"></script>
+	</body>
+</html>
