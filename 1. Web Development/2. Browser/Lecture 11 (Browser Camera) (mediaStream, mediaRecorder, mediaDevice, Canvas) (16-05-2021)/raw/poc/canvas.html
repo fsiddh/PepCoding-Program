@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="board"></canvas>
+    <script>
+        let board = document.getElementById("board");
+        board.height = window.innerHeight;
+        board.width = window.innerWidth;
+        let tool = board.getContext("2d");
+
+        tool.fillRect(0,0,board.width,board.height);
+
+        board.onresize=function(){
+            tool.clearRect(10,10,board.width,board.height);
+            tool.fillRect(0,0,board.width,board.height);
+        }
+    </script>
+</body>
+</html>

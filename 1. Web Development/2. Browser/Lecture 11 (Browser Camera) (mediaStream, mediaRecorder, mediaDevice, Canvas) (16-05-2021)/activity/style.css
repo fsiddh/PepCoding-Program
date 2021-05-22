@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0px;
+}
+
+.video-container{
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+}
+
+.video{
+    height:100%;
+    width: 100%;
+}
+
+.record-btn{
+    position:fixed; /* z index bina position k kam ni krta*/
+    font-size: 2.5rem;
+    color:red;
+    height:5rem;
+    width:5rem;
+    top:1rem;
+    z-index:2;
+    border-radius:50%;
+    right: 4vw;
+    top:40vh;
+}
