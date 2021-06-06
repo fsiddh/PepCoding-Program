@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="parent">
+        <div class = "color yellow"></div>
+        <div class = "color green">
+        </div>
+        <div class = "color blue">
+        </div>
+        <div class = "color red">
+        </div>
+    <canvas id="board"></canvas>
+
+
+    </div>
+
+    <script>
+        let board = document.getElementById("board");
+        board.height = window.innerHeight;
+        board.width = window.innerWidth;
+        let parent = document.querySelector(".parent");
+        let tool = board.getContext("2d");
+        // tool.fillRect(0,0,board.width/3,board.height/4);
+        // function draw()
+        // {    let tool = board.getContext("2d"); //pen to draw
+        //     tool.fillStyle="red"; // pen ink
+        //     tool.fillRect(0,0,board.width,board.height); // makes rect filled with black
+            
+        //outline  
+            tool.strokeStyle = "green"; //border clr
+            tool.lineWidth = 10; //border width
+        //     tool.strokeRect(0,0,board.width/2,board.height/2); //border
+        // }
+        
+        // window.addEventListener("resize",function(){
+        //     board.height = window.innerHeight;
+        //     board.width = window.innerWidth;
+        //     draw();
+        // })
+        let isMouseDown = false;
+        document.body.addEventListener("mousedown",function(e){
+            let x = e.clientX;
+            let y = e.clientY;
+            y = getCoordinate(y);
+            tool.beginPath();
+            tool.moveTo(x,y);
+            isMouseDown = true;
+        });
+
+        document.body.addEventListener("mousemove",function(e){
+            let x = e.clientX;
+            let y = e.clientY;
+            y = getCoordinate(y);
+            if(isMouseDown){
+                tool.lineTo(x,y);
+                tool.stroke();
+            }
+        })
+
+        document.body.addEventListener("mouseup",function(e){
+            isMouseDown = false;
+        })
+
+        function getCoordinate(y){
+            let obj = parent.getBoundingClientRect();
+            return y - obj.height;
+        }
+        
+    </script>
+</body>
+</html>

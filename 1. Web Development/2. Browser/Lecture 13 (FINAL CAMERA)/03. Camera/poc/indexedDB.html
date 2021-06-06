@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    DB<input type="text" value='notes' id='txtDB'>
+    Version<input type="text" value='1' id='txtVersion'>
+    <button id='btnCreateDB'>Create DB</button>
+    <button id='add'>Add Notes</button>
+</body>
+<script>
+    const btnCreateDB  = document.getElementById('btnCreateDB');
+    const addButton = document.getElementById('add');
+    let db;
+    btnCreateDB.addEventListener('click',function(){
+        createDB();
+    })
+    function createDB()
+    {
+        let dbName = document.getElementById('txtDB').value;
+        let dbVersion = document.getElementById('txtVersion').value;
+
+        // when db is init, request is called
+        let req = indexedDB.open(dbName,dbVersion);
+        // onupgrade -> created, version>browser
+        req.onupgradeneeded=function(e)
+        {
+            alert('upgrade was called');
+            db =req.result; // db object
+                                           // primary key
+            db.createObjectStore('notes',{keyPath:'nId'}); 
+        }
+        // success ->same version 
+        req.onsuccess= function(e)
+        {
+            alert('success was called');
+            db = req.result;
+            viewNotes();
+        }
+        // given version is less than browserDB version
+        req.onerror= function(e){
+            alert('error was called'+" "+e.target.error);
+        }
+    }
+    addButton.addEventListener('click',function(){
+        addNote();
+    })
+    function addNote()
+    {
+        console.log('add');
+        let note ={
+            nId:"abcdef",
+            txt:'My First Note'
+        }
+        // adding via transaction
+        // create tx             //dbname,type of tx
+        let tx = db.transaction('notes','readwrite');
+        // gives reference of the db
+        let notesStore = tx.objectStore('notes');
+        notesStore.add(note);
+    }
+    function viewNotes()
+    {
+        let tx = db.transaction('notes','readonly');
+        let notes = tx.objectStore('notes');
+        let request = notes.openCursor(); // getAll method
+        request.onsuccess =function(e)
+        {
+            let cursor = request.result; // traverses one by one
+            if(cursor) // if something
+            {
+                console.log('cursor');
+                console.log(cursor.value);
+                cursor.continue(); // multiple entry
+            }
+        }
+    }
+</script>
+</html>
