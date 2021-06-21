@@ -30,7 +30,8 @@
         req.onupgradeneeded=function(e)
         {
             alert('upgrade was called');
-            db =req.result; // db object
+            db = req.result; // db object
+            console.log(db);
                                            // primary key
             db.createObjectStore('notes',{keyPath:'nId'}); 
         }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- react algorithm script -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script> 
+    <!-- dom pr put krne k lie -->
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <!--  JSX compiler -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel"> // JSX Code
+        function Hello({person="default",age="0"}) // destructuring of object PROPS
+     { // function components ke name capital se
+            return(
+                // JSX code
+                <h1>Hello {person} Age {age}</h1> 
+            )
+        }
+
+        function Hellos(){
+            return(
+                
+                // passing args
+                <React.Fragment>
+                    <Hello person="Riya" age="21"/> 
+                    <Hello person="Priya" age="1"/>
+                    <Hello/>
+                </React.Fragment>
+            )
+        }
+        // same as body.appendChild 
+                        // function component, kis elemt k andr
+        ReactDOM.render(<Hellos/>,document.getElementById("root")); // 
+    </script>
+</body>
+</html>
