@@ -1,96 +1,176 @@
 import React, { Component } from 'react'
-import {getMovies} from './MovieService'
+import { getMovies } from './getMovies';
 export default class Movies extends Component {
-    constructor(props)
-    {
-        super(props);
-        this.state={
-            movies:getMovies(),
-            currSearchText:''
+
+    constructor() {
+        super();
+        this.state = {
+            movies: getMovies(),
+            currSearchText: '',
+            currPage: 1,
+
         }
     }
 
-    onDelete=(id)=>{
-        let filterArr = this.state.movies.filter(movieObj=>{
-            return movieObj._id!=id
-        }
-        )
-        this.setState({
-            movies:filterArr
-        })
-    }
-    handleChange=(e)=>{
+    handleChange = (e) => {
         let val = e.target.value;
+        console.log(val);
         this.setState({
-            currSearchText:val
+            currSearchText: val,
+
         })
-       
     }
+
+    onDelete = (id) => {
+        let arr = this.state.movies.filter(function (movieObj) {
+            return movieObj._id !== id;
+        })
+        // console.log(arr);
+        this.setState({
+            movies: arr
+        });
+    }
+
+    sortByRatings = (e) => {
+        let className = e.target.className;
+        console.log(className);
+        let sortedMovies = [];
+        if (className == 'fa fa-sort-asc') {
+            //ascending order
+            sortedMovies = this.state.movies.sort(function (movieObjA, movieObjB) {
+                return movieObjA.dailyRentalRate - movieObjB.dailyRentalRate
+            })
+        }
+        else {
+            //descending order
+            sortedMovies = this.state.movies.sort(function (movieObjA, movieObjB) {
+                return movieObjB.dailyRentalRate - movieObjA.dailyRentalRate
+            })
+        }
+        this.setState({
+            movies: sortedMovies
+        })
+    }
+
+    sortByStock = (e) => {
+        let className = e.target.className;
+        console.log(className);
+        let sortedMovies = [];
+        if (className == 'fa fa-sort-asc') {
+            //ascending order
+            sortedMovies = this.state.movies.sort(function (movieObjA, movieObjB) {
+                return movieObjA.numberInStock - movieObjB.numberInStock
+            })
+        }
+        else {
+            //descending order
+            sortedMovies = this.state.movies.sort(function (movieObjA, movieObjB) {
+                return movieObjB.numberInStock - movieObjA.numberInStock
+            })
+        }
+        this.setState({
+            movies: sortedMovies
+        })
+    }
+
+    handlePageChange = (pageNumber) => {
+        this.setState({ currPage: pageNumber });
+    }
+
     render() {
         console.log('render');
-        // As the filter movies operation is temporary and occurs with the state change
-        //  of currSearchText we can simply form the filterMovies array in the render method itself. So there is no need to make
-        // it as a state.
-        let {movies,currSearchText}=this.state;
-        let filterMovies =[];
-        if(currSearchText!='')
-        {
-            filterMovies = movies.filter(movieObj=>{
-                    let title = movieObj.title.trim().toLowerCase();
-                    // console.log(title);
-                    return title.includes(currSearchText.toLowerCase());
-                })
+        let { movies, currSearchText, currPage } = this.state; //ES6 destructuring
+        let limit = 4;
+        let filteredArr = [];
+
+        if (currSearchText === '') {
+            filteredArr = movies;
         }
-        else
-        {
-            filterMovies=movies;
+        else {
+            filteredArr = movies.filter(function (movieObj) {
+                let title = movieObj.title.toLowerCase();
+                console.log(title);
+                return title.includes(currSearchText.toLowerCase());
+            })
         }
+        
+        let numberofPage = Math.ceil(filteredArr.length / limit);
+        let pageNumberArr = [];
+        for (let i = 0; i < numberofPage; i++) {
+            pageNumberArr.push(i + 1);
+        }
+        let si = (currPage - 1) * limit;
+        let ei = si + limit;
+        filteredArr = filteredArr.slice(si, ei);
+
         return (
+            //JSX
             <div className='container'>
                 <div className='row'>
-                    {/* page section */}
                     <div className='col-3'>
-                        <h1>Hello</h1>
+                        Hello
                     </div>
-                    {/* search n table section */}
                     <div className='col-9'>
-                        <input onChange={this.handleChange} type='text'></input>
+                        <input type='search' value={this.state.currSearchText} onChange={this.handleChange} ></input>
                         <table className="table">
                             <thead>
                                 <tr>
+                                    <th scope="col">#</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Genre</th>
                                     <th scope="col">
-                                        <i className="fa fa-sort-asc" aria-hidden="true"></i>
-                                            Stock
-                                        <i className="fa fa-sort-desc" aria-hidden="true"></i>
+                                        <i onClick={this.sortByStock} className="fa fa-sort-asc" aria-hidden="true"></i>
+                                        Stock
+                                        <i onClick={this.sortByStock} className="fa fa-sort-desc" aria-hidden="true"></i>
                                     </th>
                                     <th scope="col">
-                                        <i className="fa fa-sort-asc" aria-hidden="true"></i>
+                                        <i onClick={this.sortByRatings} className="fa fa-sort-asc" aria-hidden="true"></i>
                                         Rate
-                                        <i className="fa fa-sort-desc" aria-hidden="true"></i>
+                                        <i onClick={this.sortByRatings} className="fa fa-sort-desc" aria-hidden="true"></i>
                                     </th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                // movies table
-                                filterMovies.map(movieObj=>(
-                                    <tr scope='row' key={movieObj._id} >
-                                    <td>{movieObj.title}</td>
-                                    <td>{movieObj.genre.name}</td>
-                                    <td>{movieObj.numberInStock}</td>
-                                    <td>{movieObj.dailyRentalRate}</td>
-                                    <td><button onClick={()=>this.onDelete(movieObj._id)} type="button" className="btn btn-danger">Delete</button></td>  
-                                    </tr>
-                                ))
+                                    filteredArr.map((movieObj) => {
+                                        return (
+                                            <tr key={movieObj._id} >
+                                                <td></td>
+                                                <td>{movieObj.title}</td>
+                                                <td>{movieObj.genre.name}</td>
+                                                <td>{movieObj.numberInStock}</td>
+                                                <td>{movieObj.dailyRentalRate}</td>
+                                                <td><button onClick={() => {
+                                                    this.onDelete(movieObj._id)
+                                                }} type="button" className="btn btn-danger">Delete</button></td>
+                                            </tr>
+                                        )
+                                    })
                                 }
                             </tbody>
-                        </table> 
+                        </table>
+                        <nav aria-label="...">
+                            <ul className="pagination">
+                                {
+                                    pageNumberArr.map((pageNumber) => {
+                                        let classStyle = pageNumber == currPage ? 'page-item active' : 'page-item';
+                                        return (
+                                            <li key={pageNumber} onClick={() => this.handlePageChange(pageNumber)} className={classStyle}><span className="page-link">{pageNumber}</span></li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
             </div>
         )
     }
 }
+
+{/* <li className="page-item"><a class="page-link" href="#">1</a></li>
+    <li className="page-item active" aria-current="page">
+      <a className="page-link" href="#">2</a>
+    </li>
+    <li className="page-item"><a class="page-link" href="#">3</a></li> */}
