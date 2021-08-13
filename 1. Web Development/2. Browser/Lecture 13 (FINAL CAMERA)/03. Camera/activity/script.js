@@ -21,8 +21,10 @@ let constraints = {
 };
 
 let mediaRecorder;
+
 // will store recorded video
 let buffer = [];
+
 // navigator has info abt browser
 // The Navigator.mediaDevices read-only property returns a MediaDevices object, which provides access to connected media input devices like cameras and microphones, as well as screen sharing.
 navigator.mediaDevices
@@ -42,7 +44,7 @@ navigator.mediaDevices
 		mediaRecorder.addEventListener("stop", function (e) {
 			// convert data to blob
 			const blob = new Blob(buffer, { type: "video/mp4" }); // converts data to file of this type
-			addMediaToGallery(blob, 'video');
+			addMediaToGallery(blob, "video");
 
 			// const url = window.URL.createObjectURL(blob); // creates file to url
 			// // download btn
@@ -66,14 +68,16 @@ videoRecorder.addEventListener("click", function (e) {
 	}
 	// start(),start timer,change icon+add animation
 	if (recordState == false) {
+		// Things useless while recording
 		uiFilter.classList.remove("ui-filter-active");
-		uiFilter.style.backgroundColor = "";
 		filterContainer.style.display = "none";
-		mediaRecorder.start(); // automatically triggers dataavailable event
-		recordState = true;
+		uiFilter.style.backgroundColor = "";
 		let currZoom = 1;
 		videoElem.style.transform = `scale(${currZoom})`;
 		zoomBox.style.display = "none";
+
+		mediaRecorder.start(); // automatically triggers dataavailable event
+		recordState = true;
 		startCounting();
 		videoRecorder.setAttribute(
 			"class",
@@ -82,10 +86,12 @@ videoRecorder.addEventListener("click", function (e) {
 	}
 	// stop(),stop timer,change icon
 	else {
+		// Things useless while recording
 		zoomBox.style.display = "block";
 		filterContainer.style.display = "block";
 		uiFilter.classList.add("ui-filter-active");
 		uiFilter.style.backgroundColor = filterColor;
+
 		mediaRecorder.stop(); // automatically trigger stop event
 		recordState = false;
 		stopCounting();
@@ -96,10 +102,13 @@ videoRecorder.addEventListener("click", function (e) {
 // create canvas of size of videoFrame,draw current frame,add/remove animation,download
 captureBtn.addEventListener("click", function (e) {
 	console.log("clicked capture");
+
 	let canvas = document.createElement("canvas");
 	canvas.width = videoElem.videoWidth;
 	canvas.height = videoElem.videoHeight;
+
 	captureBtn.classList.add("capture-animation");
+	
 	let tool = canvas.getContext("2d");
 	tool.translate(canvas.width / 2, canvas.height / 2);
 	tool.scale(zoomLevel, zoomLevel);

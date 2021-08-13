@@ -1,0 +1,9 @@
+.feed-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: grey;
+}
+.center{
+    height: 86vh;
+}
